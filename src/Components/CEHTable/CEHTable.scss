@@ -1,0 +1,31 @@
+.table {
+  display: table;
+  min-width: 100%;
+  &-container {
+    display:inline-block;
+    width:100%;
+    overflow: auto;
+  }
+  &-head {
+    display: table-header-group;
+    .row{
+      .cell{
+        min-width:100px;
+      }
+    }
+  }
+  &-body {
+    display: table-row-group;
+  }
+  &-foot{
+    display:table-footer-group;
+  }
+  .row {
+    display: table-row;
+    .cell {
+      display: table-cell;
+      padding:5px;
+    }
+  }
+
+}

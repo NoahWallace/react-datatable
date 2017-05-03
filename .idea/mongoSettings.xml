@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MongoConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="LOCAL" />
+          <option name="serverUrls">
+            <list>
+              <option value="localhost:27017" />
+            </list>
+          </option>
+          <option name="sshTunnelingConfiguration">
+            <SshTunnelingConfiguration />
+          </option>
+        </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="authenticationDatabase" value="admin" />
+          <option name="authenticationMechanism" value="SCRAM-SHA-1" />
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="SANDBOX" />
+          <option name="password" value="cehpoc102!" />
+          <option name="serverUrls">
+            <list>
+              <option value="cdldfdbc07s001:14000" />
+              <option value="cdldfdbc07s002:14000" />
+            </list>
+          </option>
+          <option name="sshTunnelingConfiguration">
+            <SshTunnelingConfiguration />
+          </option>
+          <option name="username" value="ceh01b_user" />
+        </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="authenticationDatabase" value="admin" />
+          <option name="authenticationMechanism" value="SCRAM-SHA-1" />
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="label" value="DIT" />
+          <option name="password" value="ceh01dpass" />
+          <option name="serverUrls">
+            <list>
+              <option value="cdldfdbc06s001.es.ad.adp.com:12000" />
+              <option value="cdldfdbc06s002.es.ad.adp.com:12000" />
+            </list>
+          </option>
+          <option name="sshTunnelingConfiguration">
+            <SshTunnelingConfiguration />
+          </option>
+          <option name="userDatabase" value="ceh01d" />
+          <option name="username" value="ceh01dusr" />
+        </ServerConfiguration>
+      </list>
+    </option>
+    <option name="shellPath" value="$PROJECT_DIR$/../../ceh/mongodb/bin/mongo" />
+  </component>
+</project>

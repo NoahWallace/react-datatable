@@ -1,0 +1,10 @@
+
+.gitignore
+.idea/
+node_modules/
+build/
+/example/
+
+*.log
+**/*.log
+
