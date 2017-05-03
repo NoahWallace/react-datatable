@@ -8,11 +8,12 @@ import { Footer } from './Footer';
 import './CEHTable.scss';
 export class CEHTable extends React.Component<ITableFields, any> {
 	state = {
-		rows:        [],
-		currentRows: [],
-		rowLength: 0,
-		rowsPerPage: this.props.rpp || 10,
-		clientPosition:    0
+		rows:             [],
+		currentRows:      [],
+		currentRowLength: 0,
+		rowLength:        0,
+		rowsPerPage:      this.props.rpp || 10,
+		position:         0
 	};
 	componentDidMount(){
 		let rows=this.props.rows.slice(0, this.props.limit || 100);
@@ -20,6 +21,7 @@ export class CEHTable extends React.Component<ITableFields, any> {
 			rows:rows,
 			rowLength:rows.length,
 			currentRows:rows,
+			currentRowLength:rows.length
 		})
 
 	}
@@ -53,14 +55,18 @@ export class CEHTable extends React.Component<ITableFields, any> {
 				}
 				return matchArr.indexOf(false) === -1 ;
 			})
-			this.setState({currentRows:filteredRows})
+			this.setState({
+				currentRows:filteredRows,
+				currentRowLength:filteredRows.length,
+				position:0
+			})
 
 	}
 	setPaging=(v)=>{
 		this.setState({rowsPerPage:v})
 	}
 	setPosition=(v)=>{
-		this.setState({clientPosition:v})
+		this.setState({position: v})
 	}
 	render () {
 
@@ -74,14 +80,15 @@ export class CEHTable extends React.Component<ITableFields, any> {
 					/>
 					<Rows items={this.state.currentRows}
 						  rpp={this.state.rowsPerPage}
-						  position={this.state.clientPosition}
+						  position={this.state.position}
 					/>
 					<Footer
 						setPaging={this.setPaging}
 						rpp={this.state.rowsPerPage}
 						setPosition={this.setPosition}
-						position={this.state.clientPosition}
+						position={this.state.position}
 						rowLength={this.state.rowLength}
+						currentRowLength={this.state.currentRowLength}
 					/>
 				</table>
 			</div>

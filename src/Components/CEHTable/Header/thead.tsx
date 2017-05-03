@@ -29,7 +29,6 @@ export class Header extends React.Component<any, any> {
 			Options: cell.Options || {}
 		};
 	};
-
 	setSort = (cellIdx, rowIdx, cells, reset?:boolean) => {
 		let currentState: any = this.state.cells;
 		let refObject = cells;
@@ -81,7 +80,7 @@ export class Header extends React.Component<any, any> {
 		let header: Array<JSX.Element> = [];
 		for ( let key in cells ) {
 			let cellIdx=key;
-			let search=this.Search;
+			let search=this.search;
 			if ( cells[ key ].Options ) {
 				let props = {
 					rowIdx,
@@ -109,7 +108,7 @@ export class Header extends React.Component<any, any> {
 		}
 		return header;
 	};
-	Search = (e) => {
+	search = (e) => {
 		e.preventDefault();
 		e.persist();
 		if(e.keyCode === 13){
