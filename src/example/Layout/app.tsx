@@ -26,7 +26,7 @@ let mockData = {
 				searchable:true,
 				colAlign:"right",
 				headerAlign:"right",
-				span:2
+
 			}
 		},
 

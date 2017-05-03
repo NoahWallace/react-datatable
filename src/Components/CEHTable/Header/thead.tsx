@@ -93,7 +93,6 @@ export class Header extends React.Component<any, any> {
 					setSort:     this.setSort,
 					searchable:  cells[key].Options.searchable
 
-
 				};
 				if ( cells[ key ].Options.sortable ) {
 					header.push(<SortableHeaderCell {...props} key={`h_cell_${rowIdx}_${cellIdx}`} />);
@@ -153,7 +152,7 @@ let SortableHeaderCell: React.StatelessComponent<any> = (props) => {
 				<div className="cell-text">{props.Title}</div>
 				<span> {props.currentSort === 0 ? 'a' : 'd'} </span>
 			</div>
-			{props.searchable &&
+			{props.searchable && !props.span &&
 				<div>
 					<input type="text" placeholder="search"
 						   data-id={props.Id || props.Title}
@@ -171,7 +170,7 @@ let StandardHeaderCell: React.StatelessComponent<any> = (props) => {
 		<th colSpan={props.span || 1}>
 			<div>{props.Title}</div>
 			{
-				props.searchable &&
+				props.searchable && !props.span &&
 				<div>
 					<input type="text" placeholder="search"
 						   data-id={props.Id || props.Title}
