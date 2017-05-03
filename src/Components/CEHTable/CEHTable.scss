@@ -1,31 +1,38 @@
-.table {
-  display: table;
-  min-width: 100%;
-  &-container {
-    display:inline-block;
-    width:100%;
-    overflow: auto;
-  }
-  &-head {
-    display: table-header-group;
-    .row{
-      .cell{
-        min-width:100px;
+.table-container {
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
+  table {
+    display: table;
+    min-width: 100%;
+    tr{
+      th{
+        padding:5px;
+        min-width:75px;
+      }
+      td{
+        min-width:75px;
+        padding:5px;
       }
     }
-  }
-  &-body {
-    display: table-row-group;
-  }
-  &-foot{
-    display:table-footer-group;
-  }
-  .row {
-    display: table-row;
-    .cell {
-      display: table-cell;
-      padding:5px;
     }
-  }
+    tbody{
+      tr{
+        td{
+
+        }
+      }
+      thead{
+        tr{
+          th{}
+          td{
+
+          }
+        }
+      }
+      tfoot{
+
+      }
+    }
 
 }

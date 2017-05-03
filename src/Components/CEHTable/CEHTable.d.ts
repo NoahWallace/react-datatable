@@ -5,8 +5,9 @@ export interface ITableFields{
 	recordCount?:number;
 	totalRecordCount?:number;
 	rows:Array<Array<any>>;
-	headers:Array<string | number | IHeaderOptions>;
-	sort?:(idx:number,direction:SortOptions, key:string)=>any;
+	headers:Array<Array<string | number | IHeaderOptions>>;
+	sort?:(idx:number,direction:SortOptions, key:string)=>void;
+	filter?:(filterObj:any)=>void
 
 }
 
@@ -16,10 +17,11 @@ export interface IHeaderOptions{
 	Title:string;
 	Id?:string;
 	Options?:{
-		sortable:boolean,
+		sortable?:boolean,
 		searchable?:boolean,
 		initialSort?: SortOptions,
-		currentSort?: SortOptions
+		currentSort?: SortOptions,
+		span?:number
 	};
 }
 

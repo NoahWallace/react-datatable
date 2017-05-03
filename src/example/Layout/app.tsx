@@ -5,19 +5,32 @@ import { CEHTable } from '../../Components/CEHTable';
 let ABC:React.StatelessComponent<any> = () =>(<div>this is a React Component</div>)
 let mockData = {
 	headers: [
+		[
+			{Title:"Group1",Options:{span:2}},
+			{Title:"Group2",Options:{span:2, searchable:true}},
+		],[
 		'test1',
 		'test2',
-		'test3',
+			{
+				Title:"Test3",
+				Id:"test3",
+				Options:{
+					searchable:true
+				}
+			},
 		{
 			Title:   'testSortable',
 			Id:      'testSortable',
 			Options: {
 				sortable: true,
-				searchable:true
+				searchable:true,
+				colAlign:"right",
+				headerAlign:"right",
+				span:2
 			}
 		},
 
-	],
+	]],
 	rows:    [
 		[ 'col1.1', 'col1.2', 'col1.3', 'a' ],
 		[ 'col2.1', 'col2.2', 'col2.3', 'b' ],
@@ -35,7 +48,8 @@ let mockData = {
 		[ 'col3.1', 'col3.2', 'col3.3', 'n' ],
 		[ 'col3.1', 'col3.2', 'col3.3', 'o' ],
 		[ 'col3.1', 'col3.2', 'col3.3', 'p' ],
-	]
+	],
+	options:{}
 };
 
 
@@ -70,8 +84,6 @@ export const Temp = () => {
 			<CEHTable
 				headers={mockData.headers}
 				rows={mockData.rows}
-				sort={sort}
-
 			/>
 		</div>
 	);

@@ -1,19 +1,22 @@
 import * as React from 'react';
+import { StatelessComponent } from 'react';
 
 export interface IHeaderState {
-	cells: {
+	cells: Array<{
 		[key: number]: {
 			Title: string,
-			Options?: any }
-	}
+			Options?: any
+		}
+	}>
 }
-export class Header extends React.Component<any, IHeaderState> {
+export class Header extends React.Component<any, any> {
 	state = {
-		cells: {}
+		cells: [],
+		query: {}
 	};
 
 	componentDidMount = () => {
-		this.mapCells();
+		this.mapRows();
 	};
 	getOptions = (cell: any) => {
 		if ( cell.Options && cell.Options.sortable ) {
@@ -26,20 +29,29 @@ export class Header extends React.Component<any, IHeaderState> {
 			Options: cell.Options || {}
 		};
 	};
-	setSort = (i) => {
-		let refObject = this.state.cells;
-		let direction = refObject[i].Options.currentSort === 0 ? 1 : 0;
-		for(let key in refObject){
-			if(refObject[key].Options )
-			refObject[key].Options.currentSort = refObject[key].Options.initialSort
+
+	setSort = (cellIdx, rowIdx, cells, reset?:boolean) => {
+		let currentState: any = this.state.cells;
+		let refObject = cells;
+		let direction = reset ? 0 : refObject[ cellIdx ].Options.currentSort === 0 ? 1 : 0;
+		for ( let key in refObject ) {
+			if ( refObject[ key ].Options )
+				refObject[ key ].Options.currentSort = refObject[ key ].Options.initialSort;
 		}
-		refObject[i].Options.currentSort= direction;
-		this.setState({cells:refObject});
-		this.props.sort(i,direction,refObject[i].Id || "")
+		refObject[ cellIdx ].Options.currentSort = direction;
+		currentState[ rowIdx ] = refObject;
+		this.setState({cells: currentState});
+		!reset ? this.props.sort(cellIdx, direction, refObject[ cellIdx ].Id || ''): null;
 	};
-	mapCells = () => {
+	mapRows = () => {
+		let rows = this.props.headers.map((row) => {
+			return this.mapCells(row);
+		});
+		this.setState({cells: rows});
+	};
+	mapCells = (row) => {
 		let stateObj = {};
-		this.props.items.map((cell: any, i: number) => {
+		row.map((cell: any, i: number) => {
 
 			switch ( typeof cell ) {
 				case 'object':
@@ -49,46 +61,126 @@ export class Header extends React.Component<any, IHeaderState> {
 					stateObj[ i ] = {Title: cell};
 					break;
 			}
-			this.setState({cells: stateObj});
+
 		});
+		return stateObj;
 	};
-	getCells = () => {
+	getRows = () => {
+
+		let rows = this.state.cells.map((rowObj, rowIdx) => {
+
+			return <tr className="row" key={`h_row_${rowIdx}`}>
+				{this.getCells(rowObj, rowIdx)}
+			</tr>;
+		});
+
+		return rows
+
+	};
+	getCells = (cells, rowIdx) => {
 		let header: Array<JSX.Element> = [];
-		let cells = this.state.cells;
 		for ( let key in cells ) {
-			if ( cells[ key ].Options && cells[ key ].Options.sortable ) {
-				header.push(
-					<div className="cell sortable" key={key} onClick={(e) => this.setSort(key)}>
-						<div className="cell-text">{cells[ key ].Title}</div>
-						<span> {this.state.cells[key].Options.currentSort === 0 ? "a":"d"} </span>
-					</div>
-				);
+			let cellIdx=key;
+			let search=this.Search;
+			if ( cells[ key ].Options ) {
+				let props = {
+					rowIdx,
+					cells,
+					cellIdx,
+					search,
+					Title:       cells[ key ].Title,
+					currentSort: cells[ key ].Options.currentSort,
+					span:        cells[ key ].Options.span,
+					setSort:     this.setSort,
+					searchable:  cells[key].Options.searchable
+
+
+				};
+				if ( cells[ key ].Options.sortable ) {
+					header.push(<SortableHeaderCell {...props} key={`h_cell_${rowIdx}_${cellIdx}`} />);
+				}
+				else {
+					header.push(<StandardHeaderCell {...props} key={`h_cell_${rowIdx}_${cellIdx}`}/>);
+				}
 			}
 			else {
-				header.push(<div className="cell" key={key}>{cells[ key ].Title}</div>);
+				header.push(<StandardHeaderCell {...cells[key]} key={`h_cell_${rowIdx}_${cellIdx}`} />);
 			}
 		}
 		return header;
 	};
-	Search=(e)=>{
+	Search = (e) => {
 		e.preventDefault();
 		e.persist();
-		console.log(e.keyCode)
+		if(e.keyCode === 13){
+			let query=this.state.query
+			for(let key in query){
+				let cellIdx= query[key].cellIdx;
+				let rowIdx= query[key].rowIdx;
+				this.setSort(cellIdx,rowIdx,this.state.cells[rowIdx], true)
+			}
+			this.props.filter(this.state.query)
+		}
+		else{
+			let v:any={};
+			v[e.target.getAttribute("data-id")] = {
+				value:e.target.value,
+				rowIdx:e.target.getAttribute("data-rowIdx"),
+				cellIdx:e.target.getAttribute("data-cellIdx")
+			};
+			this.setState({query:{...this.state.query,...v}})
+		}
 
-	}
+	};
+
 	render (): JSX.Element {
-		let header = this.getCells();
+		let header = this.getRows();
 
 		return (
 
-			<div className="table-head">
+			<thead>
+			{header}
+			</thead>
 
-				<div className="row">
-				{header}
-				</div>
-			</div>
 		);
 	}
 }
 ;
 
+let SortableHeaderCell: React.StatelessComponent<any> = (props) => {
+	return (
+		<th className="cell sortable">
+			<div onClick={(e) => props.setSort(props.cellIdx, props.rowIdx, props.cells)}>
+				<div className="cell-text">{props.Title}</div>
+				<span> {props.currentSort === 0 ? 'a' : 'd'} </span>
+			</div>
+			{props.searchable &&
+				<div>
+					<input type="text" placeholder="search"
+						   data-id={props.Id || props.Title}
+						   data-rowidx={props.rowIdx}
+						   data-cellidx={props.cellIdx}
+						   onKeyUp={props.search} />
+				</div>
+			}
+		</th>
+	);
+};
+
+let StandardHeaderCell: React.StatelessComponent<any> = (props) => {
+	return (
+		<th colSpan={props.span || 1}>
+			<div>{props.Title}</div>
+			{
+				props.searchable &&
+				<div>
+					<input type="text" placeholder="search"
+						   data-id={props.Id || props.Title}
+						   data-rowidx={props.rowIdx}
+						   data-cellidx={props.cellIdx}
+						   onKeyUp={props.search}/>
+				</div>
+			}
+		</th>
+	);
+};
