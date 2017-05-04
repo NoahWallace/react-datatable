@@ -2,37 +2,21 @@
   display: inline-block;
   width: 100%;
   overflow: auto;
+  .right{text-align:right;}
+  .left{text-align:left;}
+  .center{text-align:center;}
   table {
     display: table;
     min-width: 100%;
-    tr{
-      th{
-        padding:5px;
-        min-width:75px;
+    tr {
+      th {
+        padding: 5px;
+        min-width: 75px;
       }
-      td{
-        min-width:75px;
-        padding:5px;
-      }
-    }
-    }
-    tbody{
-      tr{
-        td{
-
-        }
-      }
-      thead{
-        tr{
-          th{}
-          td{
-
-          }
-        }
-      }
-      tfoot{
-
+      td {
+        min-width: 75px;
+        padding: 5px;
       }
     }
-
+  }
 }

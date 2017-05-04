@@ -1,1 +1,2 @@
-export * from "./CEHTable";
+export * from "./ITable";
+export * from "./table";

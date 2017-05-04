@@ -6,26 +6,33 @@ let ABC:React.StatelessComponent<any> = () =>(<div>this is a React Component</di
 let mockData = {
 	headers: [
 		[
-			{Title:"Group1",Options:{span:2}},
-			{Title:"Group2",Options:{span:2, searchable:true}},
+			{title:"Group1",options:{span:2}},
+			{title:"Group2",options:{span:2, searchable:true}},
 		],[
-		'test1',
-		'test2',
+			{title:'test1'},
 			{
-				Title:"Test3",
-				Id:"test3",
-				Options:{
-					searchable:true
+				title:'test2',
+				id:"test2",
+				options:{
+					hAlign:"left"
+				}
+			},
+			{
+				title:"Test3",
+				id:"test3",
+				options:{
+					searchable:true,
+					hAlign:"center"
 				}
 			},
 		{
-			Title:   'testSortable',
-			Id:      'testSortable',
-			Options: {
+			title:   'testSortable',
+			id:      'testSortable',
+			options: {
 				sortable: true,
 				searchable:true,
-				colAlign:"right",
-				headerAlign:"right",
+				cAlign:"right",
+				hAlign:"right",
 
 			}
 		},
