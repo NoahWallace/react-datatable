@@ -7,7 +7,8 @@ import { Footer } from './Footer';
 import './CEHTable.scss';
 export class CEHTable extends React.Component<ITableFields, any> {
 	state = {
-		rows:             [],
+		normalizedHeaders : [],
+		normalizedRows : [],
 		rowLength:        0,
 		currentRows:      [],
 		currentRowLength: 0,
@@ -15,8 +16,7 @@ export class CEHTable extends React.Component<ITableFields, any> {
 		position:         0,
 		headerRows:       [],
 		columnIndex:      {},
-		normalizedHeaders : [],
-		normalizedRows : []
+
 	};
 
 	componentDidMount () {
@@ -26,13 +26,12 @@ export class CEHTable extends React.Component<ITableFields, any> {
 		let normalizedRows = this.normalizeRows(normalizedHeaders);
 
 		this.setState({
-			rows:             this.props.rows,
-			//rowLength:        rows.length,
+			normalizedHeaders,
+			normalizedRows,
 			currentRows:      normalizedRows,
 			currentRowLength: normalizedRows.length,
-			//headerRows,
-			normalizedHeaders,
-			normalizedRows
+			rowLength:normalizedRows.length
+
 		});
 
 	}

@@ -9,15 +9,13 @@ export interface ITableRowsProps {
 }
 
 export class Rows extends React.Component<ITableRowsProps, any> {
-	getRows = () => {
+	getRows = () => {console.log(this.props.position)
 		return this.props.items
 			.filter((row, i) => {
 				return i >= this.props.position && i < this.props.position + this.props.rpp;
 			})
 			.map((row: any, i: number) => {
-
 					return <tr key={`b_row_${i}`}>{this.getCells(row, i)}</tr>;
-
 			});
 	};
 	getCells = (row: any, rowIdx) => {
