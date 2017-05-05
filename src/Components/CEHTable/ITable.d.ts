@@ -5,7 +5,7 @@ export interface ITableFields {
 	rpp?:number;
 	recordCount?:number;
 	totalRecordCount?:number;
-	rows:Array<Array<any>>;
+	rows:|Array<Array<any> | {[key:string]:string | number}>;
 	headers:Array<Array<string | number | IHeaderOptions>>;
 	sort?:(idx:number,direction:SortOptions, key:string)=>void;
 	filter?:(filterObj:any)=>void;
