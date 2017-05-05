@@ -1,15 +1,19 @@
 
+import { ReactElement } from 'react';
 export interface ITableFields {
-	skip?:number;
+	position?:number;
 	limit?:number;
 	rpp?:number;
 	recordCount?:number;
 	totalRecordCount?:number;
-	rows:|Array<Array<any> | {[key:string]:string | number}>;
+
+	rows:|Array<Array<any> | {[key:string]:string | number | ReactElement<any>}>;
 	headers:Array<Array<string | number | IHeaderOptions>>;
-	sort?:(idx:number,direction:SortOptions, key:string)=>void;
+	sort?:(direction:SortOptions, id:string)=>void;
+	paging?:(rpp:number)=>void;
 	filter?:(filterObj:any)=>void;
 	headerRows?:any;
+
 }
 
 

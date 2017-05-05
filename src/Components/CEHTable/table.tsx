@@ -161,14 +161,17 @@ export class CEHTable extends React.Component<ITableFields, any> {
 
 	};
 	setPaging = (v) => {
+
 		this.setState({rowsPerPage: v});
+		this.props.paging ? this.props.paging(v):""
 	};
 	setPosition = (v) => {
 		this.setState({position: v});
+
 	};
 
 	render () {
-
+		let {position, totalRecordCount}=this.props
 		return (
 			<div className="table-container">
 				<table>
@@ -184,11 +187,11 @@ export class CEHTable extends React.Component<ITableFields, any> {
 						  headers={this.state.headerRows}
 					/>
 					<Footer
-						setPaging={this.setPaging}
+						setPaging={ this.setPaging}
 						rpp={this.state.rowsPerPage}
 						setPosition={this.setPosition}
-						position={this.state.position}
-						rowLength={this.state.rowLength}
+						position={position || this.state.position}
+						rowLength={totalRecordCount || this.state.rowLength}
 						currentRowLength={this.state.currentRowLength}
 					/>
 				</table>

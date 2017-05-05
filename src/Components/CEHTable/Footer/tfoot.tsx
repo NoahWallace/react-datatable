@@ -25,9 +25,10 @@ export class Footer extends React.Component<any, any> {
 
 	};
 	setPager = () => {
-		let position= this.props.skip || this.props.position;
-		let count= this.props.totalRows || this.props.currentRowLength;
+		let position= this.props.position;
+		let count=  this.props.currentRowLength;
 		let current =  position + this.props.rpp > count ? count :position+this.props.rpp   ;
+
 		return {
 			position: position+1,
 			count,

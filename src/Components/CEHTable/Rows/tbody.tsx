@@ -9,7 +9,7 @@ export interface ITableRowsProps {
 }
 
 export class Rows extends React.Component<ITableRowsProps, any> {
-	getRows = () => {console.log(this.props.position)
+	getRows = () => {
 		return this.props.items
 			.filter((row, i) => {
 				return i >= this.props.position && i < this.props.position + this.props.rpp;

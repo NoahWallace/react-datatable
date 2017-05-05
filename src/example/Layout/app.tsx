@@ -45,7 +45,7 @@ let mockData = {
 	],
 	rows:    [
 		[ 'col1.1', 'col1.2', 'col1.3', 'a' ],
-		{idtest0: 'test0', idtest1: 'test1', idtest2: 'test2', idtest3: 'test3'},
+		{idtest0: 'test0', idtest1: <ABC/>, idtest2: 'test2', idtest3: 'test3'},
 		[ 'col3.1', 'col3.2', 'col3.3', 'c' ],
 		[ 'col3.1', 'col3.2', 'col3.3', 'd' ],
 		[ 'col3.1', 'col3.2', 'col3.3', 'e' ],
@@ -95,6 +95,10 @@ export const Temp = () => {
 			<CEHTable
 				headers={mockData.headers}
 				rows={mockData.rows}
+				sort = {(direction,key)=>{console.log(`${direction},${key}`)}}
+				filter = {(obj)=>{console.log(obj)}}
+				paging = {(v)=>{console.log(v)}}
+
 			/>
 		</div>
 	);

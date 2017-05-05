@@ -129,14 +129,14 @@ let StandardHeaderCell: React.StatelessComponent<any> = (props) => {
 };
 
 let SearchHeaderCell: React.StatelessComponent<any> = (props) => {
-	let {id,search} = props;
+	let {id,search, rowIdx, cellIdx} = props;
 
 	return (
 		<th>
 			<div>
 				<input type="text" placeholder="search"
 					   data-id={id}
-					   data-target={JSON.stringify(props)}
+					   data-target={JSON.stringify({rowIdx,cellIdx,id})}
 					   onKeyUp={search}/>
 			</div>
 		</th>
