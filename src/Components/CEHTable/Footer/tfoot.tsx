@@ -5,15 +5,7 @@ import ADPPaginationPrev from 'adp-react-icons/lib/adp/pagination-previous';
 import ADPPaginationFirst from 'adp-react-icons/lib/adp/pagination-first';
 
 export class Footer extends React.Component<any, any> {
-	state = {
-		paging:  this.props.rowsPerPage.value,
-		disable: {
-			first: false,
-			back:  false,
-			next:  false,
-			last:  false
-		}
-	};
+
 
 	componentWillReceiveProps (nextProps) {
 
@@ -32,11 +24,13 @@ export class Footer extends React.Component<any, any> {
 		this.props.setPosition(pos);
 	};
 	goToEnd=()=>{
-		this.props.setPosition(this.props.currentRowLength - this.props.currentRowLength % this.props.rowsPerPage.value)
+		let {currentRowLength, rowsPerPage} = this.props;
+		let remainder = currentRowLength % rowsPerPage.value;
+		let pos = remainder === 0 ? currentRowLength - rowsPerPage.value : currentRowLength - remainder;
+		this.props.setPosition( pos)
 	}
 	setPaging = (e) => {
 		e.preventDefault();
-		this.setState({paging: +e.target.value});
 		this.props.setPaging(+e.target.value);
 	};
 	setPager = () => {

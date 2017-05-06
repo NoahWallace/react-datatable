@@ -8,7 +8,7 @@ import { Rows } from './Rows';
 import { Footer } from './Footer';
 
 import './CEHTable.scss';
-import { isUndefined } from 'util';
+import { isNull, isUndefined } from 'util';
 export class CEHTable extends React.Component<ITableProps, ITableState> {
 	state: ITableState = {
 		normalizedHeaders: [],
@@ -19,14 +19,22 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		currentRowLength:  0,
 		rowsPerPage:       {
 			value:   10,
-			options: [ 5,10, 25, 50, 100 ]
+			options: [ 10, 25, 50, 100 ]
 		},
-		rowPosition:       0
+		rowPosition:       0,
+		control:           {
+			sort:     false,
+			paging:   false,
+			search:   false,
+			callback: () => {
+				console.log('Control callback function has not been set')
+			}
+		}
 	};
 
 	componentDidMount () {
 
-		this.props.rows.slice(0, this.props.limit || 100);
+
 
 		let normalizedHeaders: Array<Array<INormalizedHeaderItem>> = this.normalizeHeaderRows();
 		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(normalizedHeaders);
@@ -43,6 +51,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 			rowsPerPage:      this.props.rowsPerPage || this.state.rowsPerPage,
 			rowPosition:      this.props.rowPosition || 0,
 			colLength:        colLength.length,
+			control: 			{...this.state.control, ...this.props.control}
 		});
 
 	}
@@ -95,8 +104,9 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		});
 	};
 	normalizeRows = (headers): INormalizedRowItem[][] => {
-		return this.props.rows.map((row: IRowTypes, i: number) => {
-
+		let {rows} =this.props;
+		let workingRows=rows.slice(0, this.props.limit || 100)
+		return workingRows.map((row: IRowTypes, i: number) => {
 			if ( Array.isArray(row) ) {
 				return this.normalizeCells(row as ITableTypes[], headers, i);
 			}
@@ -116,34 +126,44 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		};
 		let a: Array<INormalizedRowItem> = row.map((c, i, a) => {
 			let iHeaders;
-			let fHeaders = headers
-				.find((item, idx) => item.length === a.length && item[ i ].id !== '')
-				.find((m) => {
+			try {
+				let fHeaders = headers.find((item, idx) => {
+					return  item.length === a.length && !isNull(item[ i ]) && item[ i ].id !=="" ;
+
+				}).find((m) => {
 					return m.id === c[ 0 ];
 				});
-			if ( !fHeaders ) {
-				iHeaders = headers
-					.find((item, idx) => item.length === a.length && item[ i ].id !== '')
-					.find((m) => {
-						return m.cellIdx === i;
-					});
+				if ( !fHeaders ) {
+					iHeaders = headers
+						.find((item, idx) => item.length === a.length && item[ i ].id !== '')
+						.find((m) => {
+							return m.cellIdx === i;
+						});
+				}
+				return {
+					rowIdx,
+					cellIdx:    fHeaders ? fHeaders.cellIdx : i,
+					text:       Array.isArray(c) ? c[ 1 ] : c,
+					searchText: parseSearchText(c),
+					id:         fHeaders ? fHeaders.id : iHeaders.id,
+					colClass:   fHeaders ? fHeaders.colClass : iHeaders.colClass
+				};
+			}
+			catch(e){
+				console.error('It appears there is an issue when parsing/normalizing your row index. Validate that your largest header length is equal to your row length')
+				throw e;
 			}
 
-			return {
-				rowIdx,
-				cellIdx:    fHeaders ? fHeaders.cellIdx : i,
-				text:       Array.isArray(c) ? c[ 1 ] : c,
-				searchText: parseSearchText(c),
-				id:         fHeaders ? fHeaders.id : iHeaders.id,
-				colClass:   fHeaders ? fHeaders.colClass : iHeaders.colClass
-			};
+
+
 
 		});
 		return a;
 	};
 
 	sortRows = (direction: any, id: string) => {
-		let rows = this.state.normalizedRows;
+		let {normalizedRows,currentRows}=this.state;
+		let rows = currentRows.length < normalizedRows.length ? currentRows : normalizedRows;
 		let sortRows = rows.sort((a: any, b: any) => {
 			let pprev = a.find((item) => item.id === id),
 				pnext = b.find((item) => item.id === id);
@@ -170,7 +190,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 				let current = filterObj[ key ];
 				let target = JSON.parse(current.target);
 				let reg = new RegExp(current.value, 'i');
-
+				console.log(key,row[ target.cellIdx ].searchText,reg.test(row[ target.cellIdx ].searchText))
 				let match = current.value.trim() ? reg.test(row[ target.cellIdx ].searchText) : true;
 				matchArr.push(match);
 			}
@@ -185,14 +205,28 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 	};
 	setPaging = (v) => {
 		this.setState({rowsPerPage: {...this.state.rowsPerPage, ...{value: v}}});
-		this.props.paging ? this.props.paging(v) : '';
+		this.props.control.paging ? this.userControl("paging") : '';
 	};
 	setPosition = (v) => {
 		this.setState({rowPosition: v});
 	};
-
+	userControl = (type:string) => {
+		let actionObj={
+			action:type,
+			query:{},
+			sort:{
+				direction:0,
+				id:""
+			},
+			paging:{
+				rowsPerPage:this.state.rowsPerPage.value,
+				currentPosition:0
+			}
+		}
+		this.state.control.callback(actionObj)
+	}
 	render () {
-		let {rowPosition, totalRecordCount} = this.props;
+
 		return (
 			<div className="table-wrapper">
 				<table className={this.props.className}>
@@ -200,6 +234,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 						headers={this.state.normalizedHeaders}
 						sort={this.props.sort || this.sortRows}
 						filter={this.props.filter || this.filterRows}
+						control={this.state.control}
 					/>
 					<Rows items={this.state.currentRows}
 						  rowsPerPage={this.state.rowsPerPage}
@@ -213,6 +248,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 						rowLength={ this.state.rowLength}
 						currentRowLength={this.state.currentRowLength}
 						colLength={this.state.colLength}
+						control={this.state.control}
 					/>
 				</table>
 			</div>

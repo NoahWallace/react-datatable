@@ -24,6 +24,12 @@ export interface ITableProps {
 	paging?: (rowsPerPage: number) => void;
 	filter?: (filterObj: any) => void;
 	pageSelect?: Array<number>;
+	control?:{
+		sort:boolean;
+		paging:boolean;
+		search:boolean;
+		callback:(param)=>void;
+	}
 
 }
 export interface ITableState {
@@ -38,11 +44,17 @@ export interface ITableState {
 		options?: Array<number>;
 	},
 	rowPosition: number,
+	control?:{
+		sort:boolean;
+		paging:boolean;
+		search:boolean;
+		callback:(param)=>void;
+	}
 }
 export interface INormalizedHeaderItem {
 	rowIdx: number;
 	cellIdx: number;
-	title: string;
+	title: string | number | JSX.Element;
 	id: string;
 	colClass: string;
 	headerClass: string;
@@ -62,7 +74,7 @@ export interface INormalizedRowItem {
 }
 
 export interface IHeaderOptions {
-	title: string;
+	title: string | number | JSX.Element;
 	//id should only be assigned to the column headers not group headers
 	id?: string;
 	options?: {
