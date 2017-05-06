@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { StatelessComponent } from 'react';
+import AngleDown from 'adp-react-icons/lib/fa/angle-down'
+import AngleUp from 'adp-react-icons/lib/fa/angle-up'
+
 
 export interface IHeaderState {
 	cells: Array<{
@@ -30,11 +33,8 @@ export class Header extends React.Component<any, any> {
 
 		let rows = this.props.headers.map((o, rowIdx, a) => {
 			let lastRow = rowIdx === a.length - 1;
-			return <tr className="row" key={`h_row_${rowIdx}`}>
-				{this.getCells(o, rowIdx, lastRow)}
-			</tr>;
+			return o.every((c)=>c===null) ? null : <tr  key={`h_row_${rowIdx}`}>{this.getCells(o, rowIdx, lastRow)}</tr>;
 		});
-
 		return rows;
 
 	};
@@ -50,9 +50,9 @@ export class Header extends React.Component<any, any> {
 			if ( c.sortable ) {
 				return <SortableHeaderCell {...c}  setSort={this.setSort} sort={this.state.headerState[`${rowIdx}_${i}`].sort} key={`h_cell_${c.rowIdx}_${c.cellIdx}`}/>;
 			}
-			else {
-				return <StandardHeaderCell {...c} key={`h_cell_${c.rowIdx}_${c.cellIdx}`}/>;
-			}
+
+			return <StandardHeaderCell {...c} key={`h_cell_${c.rowIdx}_${c.cellIdx}`}/>;
+
 		});
 	};
 	setSort = (cellIdx, rowIdx, id, reset?: boolean) => {
@@ -64,9 +64,13 @@ export class Header extends React.Component<any, any> {
 			}
 		}
 		let direction = reset ? 0 : itemState === -1 ? 0 : itemState === 0 ? 1 : 0;
-		!reset ? currentState[`${rowIdx}_${cellIdx}`].sort =direction: "";
+
+		if(!reset){
+			currentState[`${rowIdx}_${cellIdx}`].sort =direction;
+			this.props.sort(direction, currentState[`${rowIdx}_${cellIdx}`].id);
+		}
 		this.setState({headerState:currentState});
-		!reset ? this.props.sort(direction, currentState[`${rowIdx}_${cellIdx}`].id || '') : null;
+
 	};
 	search = (e) => {
 		e.preventDefault();
@@ -99,7 +103,7 @@ export class Header extends React.Component<any, any> {
 
 		return (
 			<thead>
-			{header}
+				{header}
 			</thead>
 		);
 	}
@@ -108,11 +112,15 @@ export class Header extends React.Component<any, any> {
 
 let SortableHeaderCell: React.StatelessComponent<any> = (props) => {
 	let {cellIdx, rowIdx, setSort, id, title, sort, headerClass} = props;
+	let angles =<span><i><AngleDown/><AngleUp/></i></span>;
+	let ad =<span><i><AngleDown/></i></span>;
+	let au =<span><i><AngleUp/></i></span>;
 	return (
-		<th className={'sortable ' + headerClass}>
-			<div onClick={(e) => setSort(cellIdx, rowIdx, id)}>
-				<div className="cell-text">{title}</div>
-				<span dangerouslySetInnerHTML={{__html: sort === -1 ? 'u' : sort === 0 ? 'a' : 'd'}}/>
+		<th className={'sort ' + headerClass}>
+			<div className="sort-text" onClick={(e) => setSort(cellIdx, rowIdx, id)}>
+				<div >{title}</div>
+				{sort === -1 ? angles : sort === 0 ? au : ad}
+
 			</div>
 		</th>
 	);
@@ -129,10 +137,10 @@ let StandardHeaderCell: React.StatelessComponent<any> = (props) => {
 };
 
 let SearchHeaderCell: React.StatelessComponent<any> = (props) => {
-	let {id,search, rowIdx, cellIdx} = props;
+	let {id,search, rowIdx, cellIdx, headerClass} = props;
 
 	return (
-		<th>
+		<th className={headerClass}>
 			<div>
 				<input type="text" placeholder="search"
 					   data-id={id}

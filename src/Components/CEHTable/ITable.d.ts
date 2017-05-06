@@ -1,32 +1,76 @@
-
 import { ReactElement } from 'react';
-export interface ITableFields {
-	position?:number;
-	limit?:number;
-	rpp?:number;
-	recordCount?:number;
-	totalRecordCount?:number;
 
-	rows:|Array<Array<any> | {[key:string]:string | number | ReactElement<any>}>;
-	headers:Array<Array<string | number | IHeaderOptions>>;
-	sort?:(direction:SortOptions, id:string)=>void;
-	paging?:(rpp:number)=>void;
-	filter?:(filterObj:any)=>void;
-	headerRows?:any;
+export type ITableTypes = number | string | JSX.Element;
+export type IRowTypes = Array<ITableTypes> | { [key: string]: ITableTypes };
+/*
+ React Elements Should not be used in sortable or searchable columns
+ */
+export interface ITableProps {
+	className: string;
+
+	rowPosition?: number;
+	limit?: number;
+	rowsPerPage?: {
+		value: number;
+		options?: Array<number>;
+
+	};
+	recordCount?: number;
+	totalRecordCount?: number;
+
+	rows: Array<IRowTypes>;
+	headers: Array<Array<IHeaderOptions>>;
+	sort?: (direction: 0 | 1, id: string) => void;
+	paging?: (rowsPerPage: number) => void;
+	filter?: (filterObj: any) => void;
+	pageSelect?: Array<number>;
+
+}
+export interface ITableState {
+	normalizedHeaders: INormalizedHeaderItem[][],
+	normalizedRows: INormalizedRowItem[][],
+	rowLength: number,
+	colLength: number,
+	currentRows: INormalizedRowItem[][],
+	currentRowLength: number,
+	rowsPerPage?: {
+		value: number;
+		options?: Array<number>;
+	},
+	rowPosition: number,
+}
+export interface INormalizedHeaderItem {
+	rowIdx: number;
+	cellIdx: number;
+	title: string;
+	id: string;
+	colClass: string;
+	headerClass: string;
+	span: number;
+	sort: number;
+	searchable: boolean;
+	sortable: boolean;
+}
+export interface INormalizedRowItem {
+	rowIdx: number;
+	cellIdx: number;
+	text: ITableTypes;
+	searchText: string;
+	id: string;
+	colClass: string;
 
 }
 
-
-export type SortOptions = 0|1;
-export interface IHeaderOptions{
-	title:string;
-	id?:string;
-	options?:{
-		sortable?:boolean,
-		searchable?:boolean,
-		initialSort?: SortOptions,
-		currentSort?: SortOptions,
-		span?:number
+export interface IHeaderOptions {
+	title: string;
+	//id should only be assigned to the column headers not group headers
+	id?: string;
+	options?: {
+		sortable?: boolean,
+		searchable?: boolean,
+		span?: number,
+		headerClass?: string,
+		colClass?: string
 	};
 }
 

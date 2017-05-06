@@ -1,18 +1,12 @@
 import * as React from 'react';
 
-export interface ITableRowsProps {
-	items: Array<number | string | JSX.Element>,
-	headers: any;
-	columnIndex: any;
-	position: number;
-	rpp: number;
-}
 
-export class Rows extends React.Component<ITableRowsProps, any> {
+
+export class Rows extends React.Component<any, any> {
 	getRows = () => {
 		return this.props.items
 			.filter((row, i) => {
-				return i >= this.props.position && i < this.props.position + this.props.rpp;
+				return i >= this.props.position && i < this.props.position + this.props.rowsPerPage.value;
 			})
 			.map((row: any, i: number) => {
 					return <tr key={`b_row_${i}`}>{this.getCells(row, i)}</tr>;
@@ -33,7 +27,7 @@ export class Rows extends React.Component<ITableRowsProps, any> {
 	render () {
 
 		return (
-			<tbody className="table-body">
+			<tbody className="table__body">
 				{this.getRows()}
 			</tbody>
 		);

@@ -2,12 +2,13 @@ import * as React from 'react';
 import { Link, Route, BrowserRouter } from 'react-router-dom';
 import { CEHTable } from '../../Components/CEHTable';
 
+
 let ABC: React.StatelessComponent<any> = () => (<div>this is a React Component</div>);
 let mockData = {
 	headers: [
 		[
-			{title: 'Group1', options: {span: 2}},
-			{title: 'Group2', options: {span: 2, searchable: true}}
+			{title: 'Group1', options: {span: 2, headerClass:'center'}},
+			{title: 'Group2', options: {span: 2, headerClass:'center'}}
 		],
 		[
 			{title: 'test0',id:'idtest0'},
@@ -25,7 +26,7 @@ let mockData = {
 				id:      'idtest3',
 				options: {
 					sortable:   true,
-					searchable: true,
+					//searchable: true,
 					colClass:     'right',
 					headerClass:     'right',
 
@@ -35,7 +36,7 @@ let mockData = {
 				title:   'Test2',
 				id:      'idtest2',
 				options: {
-					searchable: true,
+					//searchable: true,
 					colClass:     'center',
 					headerClass:     'center'
 				}
@@ -60,8 +61,7 @@ let mockData = {
 		[ 'col3.1', 'col3.2', 'col3.3', 'n' ],
 		[ 'col3.1', 'col3.2', 'z', 'o' ],
 		[ 'col3.1', 'col3.2', 'col3.3', 'p' ],
-	],
-	options: {}
+	]
 };
 
 export const Layout = () => {
@@ -93,11 +93,9 @@ export const Temp = () => {
 	return (
 		<div>
 			<CEHTable
+				className="vdl-table"
 				headers={mockData.headers}
 				rows={mockData.rows}
-				sort = {(direction,key)=>{console.log(`${direction},${key}`)}}
-				filter = {(obj)=>{console.log(obj)}}
-				paging = {(v)=>{console.log(v)}}
 
 			/>
 		</div>
