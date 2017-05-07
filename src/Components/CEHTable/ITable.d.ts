@@ -7,17 +7,14 @@ export type IRowTypes = Array<ITableTypes> | { [key: string]: ITableTypes };
  */
 export interface ITableProps {
 	className: string;
-
 	rowPosition?: number;
 	limit?: number;
-	rowsPerPage?: {
-		value: number;
-		options?: Array<number>;
+	rowsPerPage?: number;
+	rowsPerPageOptions?:Array<number>
 
-	};
 	recordCount?: number;
 	totalRecordCount?: number;
-
+	footer?:boolean;
 	rows: Array<IRowTypes>;
 	headers: Array<Array<IHeaderOptions>>;
 	sort?: (direction: 0 | 1, id: string) => void;
@@ -25,9 +22,10 @@ export interface ITableProps {
 	filter?: (filterObj: any) => void;
 	pageSelect?: Array<number>;
 	control?:{
-		sort:boolean;
-		paging:boolean;
-		search:boolean;
+		sort?:boolean;
+		setRowsPerPage?:boolean;
+		setPosition?:boolean;
+		search?:boolean;
 		callback:(param)=>void;
 	}
 
@@ -39,10 +37,9 @@ export interface ITableState {
 	colLength: number,
 	currentRows: INormalizedRowItem[][],
 	currentRowLength: number,
-	rowsPerPage?: {
-		value: number;
-		options?: Array<number>;
-	},
+	rowsPerPageOptions?:Array<number>;
+	rowsPerPage?:number
+
 	rowPosition: number,
 	control?:{
 		sort:boolean;

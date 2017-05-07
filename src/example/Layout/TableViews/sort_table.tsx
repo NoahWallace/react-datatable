@@ -15,6 +15,8 @@ export const SortTable = () => {
 				className="vdl-table"
 				headers={mockHeaders.sort}
 				rows={mockData}
+				footer
+				limit={93}
 			/>
 		</div>
 	);

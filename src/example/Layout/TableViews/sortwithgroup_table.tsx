@@ -15,6 +15,8 @@ export const SortWithGroupTable = () => {
 				className="vdl-table"
 				headers={mockHeaders.sort_withgroup}
 				rows={mockData}
+				footer
+
 			/>
 		</div>
 	);

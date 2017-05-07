@@ -17,10 +17,9 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		colLength:         0,
 		currentRows:       [],
 		currentRowLength:  0,
-		rowsPerPage:       {
-			value:   10,
-			options: [ 10, 25, 50, 100 ]
-		},
+		rowsPerPage:  10,
+		rowsPerPageOptions:[ 10, 25, 50, 100 ],
+
 		rowPosition:       0,
 		control:           {
 			sort:     false,
@@ -34,10 +33,8 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 
 	componentDidMount () {
 
-
-
 		let normalizedHeaders: Array<Array<INormalizedHeaderItem>> = this.normalizeHeaderRows();
-		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(normalizedHeaders);
+		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(normalizedHeaders,this.props.rows);
 		let colLength = normalizedHeaders.reduce(function (a, i, ii) {
 			return ii === 1 ? a : i.length > a.length ? i : a;
 		});
@@ -46,7 +43,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 			normalizedHeaders,
 			normalizedRows,
 			currentRows:      normalizedRows,
-			currentRowLength: normalizedRows.length,
+			currentRowLength: this.props.totalRecordCount || normalizedRows.length,
 			rowLength:        this.props.totalRecordCount || normalizedRows.length,
 			rowsPerPage:      this.props.rowsPerPage || this.state.rowsPerPage,
 			rowPosition:      this.props.rowPosition || 0,
@@ -55,7 +52,19 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		});
 
 	}
+	componentWillReceiveProps(nextProps){
 
+		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(this.state.normalizedHeaders, nextProps.rows);
+		this.setState({
+			normalizedRows,
+			currentRows:      normalizedRows,
+			currentRowLength: nextProps.totalRecordCount || normalizedRows.length,
+			rowLength:        nextProps.totalRecordCount || normalizedRows.length,
+			rowsPerPage:      nextProps.rowsPerPage || this.state.rowsPerPage,
+			rowPosition:      nextProps.rowPosition || 0,
+		});
+
+	}
 	normalizeHeaderRows = (): Array<Array<INormalizedHeaderItem>> => {
 		let searchRow: any = [];
 		let rows = this.props.headers.map((row, i) => {
@@ -103,8 +112,9 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 
 		});
 	};
-	normalizeRows = (headers): INormalizedRowItem[][] => {
-		let {rows} =this.props;
+	normalizeRows = (headers, rows): INormalizedRowItem[][] => {
+
+		if(!rows || rows.length===0){return []}
 		let workingRows=rows.slice(0, this.props.limit || 100)
 		return workingRows.map((row: IRowTypes, i: number) => {
 			if ( Array.isArray(row) ) {
@@ -190,7 +200,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 				let current = filterObj[ key ];
 				let target = JSON.parse(current.target);
 				let reg = new RegExp(current.value, 'i');
-				console.log(key,row[ target.cellIdx ].searchText,reg.test(row[ target.cellIdx ].searchText))
+
 				let match = current.value.trim() ? reg.test(row[ target.cellIdx ].searchText) : true;
 				matchArr.push(match);
 			}
@@ -198,31 +208,33 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		});
 		this.setState({
 			currentRows:      filteredRows,
-			currentRowLength: filteredRows.length,
+			currentRowLength: this.props.totalRecordCount || filteredRows.length,
 			rowPosition:      0
 		});
 
 	};
-	setPaging = (v) => {
-		this.setState({rowsPerPage: {...this.state.rowsPerPage, ...{value: v}}});
-		this.props.control.paging ? this.userControl("paging") : '';
+	setRowsPerPage = (rpp) => {
+		this.props.control.setRowsPerPage ? this.userControl("setRowsPerPage",{rpp}) :
+			this.setState({rowsPerPage:  rpp});
 	};
-	setPosition = (v) => {
-		this.setState({rowPosition: v});
+	setPosition = (pos) => {
+		this.props.control.setPosition ? this.userControl("setPosition",{pos}) :
+			this.setState({rowPosition: pos});
 	};
-	userControl = (type:string) => {
+	userControl = (type:string,k) => {
 		let actionObj={
 			action:type,
 			query:{},
 			sort:{
-				direction:0,
-				id:""
+				direction:null,
+				id:null
 			},
 			paging:{
-				rowsPerPage:this.state.rowsPerPage.value,
-				currentPosition:0
+				rowsPerPage:k.hasOwnProperty("rpp") ? k.rpp : this.state.rowsPerPage,
+				position:k.hasOwnProperty("pos") ? k.pos : this.state.rowPosition
 			}
 		}
+
 		this.state.control.callback(actionObj)
 	}
 	render () {
@@ -239,10 +251,13 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 					<Rows items={this.state.currentRows}
 						  rowsPerPage={this.state.rowsPerPage}
 						  position={this.state.rowPosition}
+						  footer={this.props.footer}
+						  control={this.props.control}
 					/>
-					<Footer
-						setPaging={ this.setPaging}
+					{this.props.footer && <Footer
+						setRowsPerPage={this.setRowsPerPage}
 						rowsPerPage={this.state.rowsPerPage}
+						rowsPerPageOptions={this.state.rowsPerPageOptions}
 						setPosition={this.setPosition}
 						position={this.state.rowPosition}
 						rowLength={ this.state.rowLength}
@@ -250,6 +265,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 						colLength={this.state.colLength}
 						control={this.state.control}
 					/>
+					}
 				</table>
 			</div>
 

@@ -1,3 +1,5 @@
+export * from './http_simple_table';
+export * from './http_paging_table';
 export * from './search_table';
 export * from './simple_table';
 export * from './simplegrouped_table';

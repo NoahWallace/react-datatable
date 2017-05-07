@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {DropdownList} from 'adp-react-components';
 import ADPPaginationNext from 'adp-react-icons/lib/adp/pagination-next';
 import ADPPaginationLast from 'adp-react-icons/lib/adp/pagination-last';
 import ADPPaginationPrev from 'adp-react-icons/lib/adp/pagination-previous';
@@ -14,33 +15,34 @@ export class Footer extends React.Component<any, any> {
 		this.props.setPosition(0)
 	}
 	goBack = () => {
-		let pos = this.props.position - this.props.rowsPerPage.value;
+		let pos = this.props.position - this.props.rowsPerPage;
 		pos < 0 ? pos = 0 : '';
 		this.props.setPosition(pos);
 	};
 	goForward = () => {
-		let pos = this.props.position + this.props.rowsPerPage.value;
+		let pos = this.props.position + this.props.rowsPerPage;
 		pos >= this.props.rowLength ? pos = this.props.position : '';
+
 		this.props.setPosition(pos);
 	};
 	goToEnd=()=>{
 		let {currentRowLength, rowsPerPage} = this.props;
-		let remainder = currentRowLength % rowsPerPage.value;
-		let pos = remainder === 0 ? currentRowLength - rowsPerPage.value : currentRowLength - remainder;
-		this.props.setPosition( pos)
+		let remainder = currentRowLength % rowsPerPage;
+		let pos = remainder === 0 ? currentRowLength - rowsPerPage : currentRowLength - remainder;
+		this.props.setPosition(pos)
 	}
-	setPaging = (e) => {
-		e.preventDefault();
-		this.props.setPaging(+e.target.value);
+	setPaging = (v) => {
+
+		this.props.setRowsPerPage(v);
 	};
 	setPager = () => {
-		let position = this.props.position;
-		let count = this.props.currentRowLength;
-		let current = position + this.props.rowsPerPage.value > count ? count : position + this.props.rowsPerPage.value;
+		let {position,currentRowLength, rowsPerPage } = this.props;
+
+		let current = position + rowsPerPage > currentRowLength ? currentRowLength : position + rowsPerPage;
 
 		return {
 			position: position + 1,
-			count,
+			currentRowLength,
 			current
 		};
 
@@ -48,23 +50,26 @@ export class Footer extends React.Component<any, any> {
 
 	render () {
 		let pager = this.setPager();
-		let page = `${pager.position} - ${pager.current} of ${pager.count}`;
+		let page = `${pager.position} - ${pager.current} of ${pager.currentRowLength}`;
 		let st: any = {};
 
-		st.first = pager.position - this.props.rowsPerPage.value < 0;
+		st.first = pager.position - this.props.rowsPerPage < 0;
 		st.back = pager.position <2 ;
-		st.next = pager.current >= pager.count;
-		st.last = pager.current >= pager.count;
+		st.next = pager.current >= pager.currentRowLength;
+		st.last = pager.current >= pager.currentRowLength;
 
-		let pageSelect = this.props.rowsPerPage.options.map((v, i) => <option key={i} value={v}>{v}</option>);
+		let pageSelect = this.props.rowsPerPageOptions.map((v, i) => <option key={i} value={v}>{v}</option>);
 		return (
 			<tfoot>
 			<tr>
 				<td colSpan={this.props.colLength}>
 					<div>
-						<select onChange={this.setPaging} value={this.props.rowsPerPage.value}>
-							{pageSelect}
-						</select>
+						<DropdownList
+							value={this.props.rowsPerPage}
+							data={this.props.rowsPerPageOptions}
+							onChange={this.setPaging}
+						/>
+
 						<button className={st.first ? 'pagerbtn disabled' : 'pagerbtn'}
 								onClick={this.goToStart}><i><ADPPaginationFirst /></i>
 						</button>

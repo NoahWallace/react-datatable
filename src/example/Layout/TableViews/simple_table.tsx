@@ -5,7 +5,7 @@ import {mockdata1} from '../mockData/mockdata1';
 import {mockHeaders} from '../mockData/headers'
 
 let mockData=mockdata1.slice(0,100);
-console.log(mockData.length)
+
 
 export const SimpleTable = () => {
 
@@ -15,6 +15,7 @@ export const SimpleTable = () => {
 				className="vdl-table"
 				headers={mockHeaders.simple}
 				rows={mockData}
+				limit={23}
 			/>
 		</div>
 	);

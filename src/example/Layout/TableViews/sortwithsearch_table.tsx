@@ -15,6 +15,7 @@ export const SortWithSearchTable = () => {
 				className="vdl-table"
 				headers={mockHeaders.sort_withsearch}
 				rows={mockData}
+				footer
 			/>
 		</div>
 	);

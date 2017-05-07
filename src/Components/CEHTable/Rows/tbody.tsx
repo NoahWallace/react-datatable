@@ -4,9 +4,15 @@ import * as React from 'react';
 
 export class Rows extends React.Component<any, any> {
 	getRows = () => {
+
+		if(this.props.items.length===0){return;}
+
 		return this.props.items
 			.filter((row, i) => {
-				return i >= this.props.position && i < this.props.position + this.props.rowsPerPage.value;
+				if(this.props.control.setPosition){return true}
+				return this.props.footer ?
+					i >= this.props.position &&
+					i < this.props.position + this.props.rowsPerPage.value : true
 			})
 			.map((row: any, i: number) => {
 					return <tr key={`b_row_${i}`}>{this.getCells(row, i)}</tr>;
@@ -25,10 +31,11 @@ export class Rows extends React.Component<any, any> {
 
 
 	render () {
+		let rows=this.getRows();
 
 		return (
 			<tbody className="table__body">
-				{this.getRows()}
+				{rows}
 			</tbody>
 		);
 	}

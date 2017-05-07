@@ -3,7 +3,7 @@
 .table-wrapper {
   display: inline-block;
   width: 100%;
-  overflow: auto;
+
   .right{text-align:right;}
   .left{text-align:left;}
   .center{text-align:center;}
@@ -48,6 +48,11 @@
             display: inline-block;
             line-height:36px;
             font-size: 18px;
+          }
+          .vdl-dropdown-list{
+            display: inline-block;
+            bottom: -9px;
+
           }
         }
       }

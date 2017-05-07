@@ -8,12 +8,10 @@ import {
 	SearchTable,
 	SortTable,
 	SortWithGroupTable,
-	SortWithSearchTable
+	SortWithSearchTable,
+	HttpSimpleTable,
+	HttpPagingTable
 } from './TableViews';
-
-
-
-let ABC: React.StatelessComponent<any> = () => (<div>this is a React Component</div>);
 
 
 export const Layout = () => {
@@ -35,6 +33,13 @@ export const Layout = () => {
 								<li><Link to="/sortwithsearch">sortwithsearch</Link></li>
 							</ul>
 						</li>
+						<li><h3>Http Tables</h3>
+							<ul>
+								<li><Link to="/httpsimple">Simple</Link></li>
+								<li><Link to="/httppaging">Paging</Link></li>
+
+							</ul>
+						</li>
 					</ul>
 				</nav>
 				<main>
@@ -46,6 +51,8 @@ export const Layout = () => {
 						<Route path="/sort" component={SortTable}/>
 						<Route path="/sortwithgroup" component={SortWithGroupTable}/>
 						<Route path="/sortwithsearch" component={SortWithSearchTable}/>
+						<Route path="/httpsimple" component={HttpSimpleTable}/>
+						<Route path="/httppaging" component={HttpPagingTable}/>
 					</div>
 				</main>
 
