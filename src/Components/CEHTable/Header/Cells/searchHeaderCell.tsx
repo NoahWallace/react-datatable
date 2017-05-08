@@ -27,7 +27,7 @@ export class SearchHeaderCell extends React.Component<ISearchHeaderCellProps, {}
 					<span  onClick={this.handleClear}
 						   data-id={id}
 						   data-target={JSON.stringify({rowIdx, cellIdx, id})}
-					><i><CloseThin /></i></span>}
+					><CloseThin /></span>}
 					<input type="text"
 						   ref={(ref)=>this[id]=ref}
 						   data-id={id}

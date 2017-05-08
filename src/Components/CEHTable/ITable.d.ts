@@ -15,43 +15,34 @@ export interface ITableProps {
 	recordCount?: number;
 	totalRecordCount?: number;
 	footer?:boolean;
-	rows: Array<IRowTypes>;
-	headers: Array<Array<IHeaderOptions>>;
+	rows: IRowTypes[];
+	headers: IHeaderOptions[][];
 	sort?: (direction: 0 | 1, id: string) => void;
 	paging?: (rowsPerPage: number) => void;
 	filter?: (filterObj: any) => void;
 	pageSelect?: Array<number>;
-	control?:{
-		sort?:boolean;
-		setRowsPerPage?:boolean;
-		setPosition?:boolean;
-		search?:boolean;
-		callback:(param)=>void;
-	}
+	control?:IHTTPControl;
+
 
 }
 export interface ITableState {
-	normalizedHeaders: INormalizedHeaderItem[][],
-	normalizedRows: INormalizedRowItem[][],
-	rowLength: number,
-	colLength: number,
-	currentRows: INormalizedRowItem[][],
-	currentRowLength: number,
-	rowsPerPageOptions?:Array<number>;
-	rowsPerPage?:number
-
-	rowPosition: number,
-	control?:{
-		sort:boolean;
-		paging:boolean;
-		search:boolean;
-		callback:(param)=>void;
-	}
+	normalizedHeaders: INormalizedHeaderItem[][];
+	normalizedRows: INormalizedRowItem[][];
+	currentRows: INormalizedRowItem[][];
+	rowLength: number;
+	currentRowLength: number;
+	colLength: number;
+	sort?: {direction: 0 | 1, id: string};
+	rowsPerPageOptions?:number[];
+	rowsPerPage?:number;
+	rowPosition: number;
+	control?:IHTTPControl
 }
+
 export interface INormalizedHeaderItem {
 	rowIdx: number;
 	cellIdx: number;
-	title: string | number | JSX.Element;
+	title: ITableTypes;
 	id: string;
 	colClass: string;
 	headerClass: string;
@@ -71,7 +62,7 @@ export interface INormalizedRowItem {
 }
 
 export interface IHeaderOptions {
-	title: string | number | JSX.Element;
+	title: ITableTypes;
 	//id should only be assigned to the column headers not group headers
 	id?: string;
 	options?: {
@@ -81,5 +72,26 @@ export interface IHeaderOptions {
 		headerClass?: string,
 		colClass?: string
 	};
+}
+
+export interface IHTTPControl{
+	sort?:boolean;
+	setRowsPerPage?:boolean;
+	setPosition?:boolean;
+	search?:boolean;
+	callback:(param:IHTTPControlCallbackObj)=>void;
+}
+export type ControlTypes = "setRowsPerPage" | "setPosition" | "sort";
+export interface IHTTPControlCallbackObj{
+		action:string;
+		paging:{
+			position:number;
+			rowsPerPage:number
+		};
+		query:{}
+		sort:{
+			direction:0|1;
+			id:string;
+		}
 }
 

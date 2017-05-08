@@ -49,6 +49,19 @@ export class HttpPagingTable extends React.Component<any,any> {
 		})
 	}
 	updateData = (o) =>{
+		switch(o.action){
+			case 'sort':
+				console.log(o.sort)
+				break;
+			case 'search':
+				break;
+			case 'setRowsPerPage':
+				this.setState({paging:{...this.state.paging,...{rowsPerPage:o.paging.rowsPerPage}}})
+				break;
+			case 'setPosition':
+				this.setState({paging:{...this.state.paging,...{position:o.paging.position}}})
+				break;
+		}
 
 		this.getData(o).then((d)=>{
 			o.tableRows=d
@@ -62,7 +75,7 @@ export class HttpPagingTable extends React.Component<any,any> {
 		<div>
 			<CEHTable
 				className="vdl-table"
-				headers={mockHeaders.simple}
+				headers={mockHeaders.sort}
 				rows={this.state.tableRows}
 				footer
 				rowsPerPage={this.state.paging.rowsPerPage}
@@ -71,6 +84,7 @@ export class HttpPagingTable extends React.Component<any,any> {
 				control={{
 					setRowsPerPage:true,
 					setPosition:true,
+					sort:true,
 					callback:this.updateData
 				}}
 			/>

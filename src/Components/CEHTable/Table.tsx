@@ -3,12 +3,13 @@ import {
 	INormalizedHeaderItem, INormalizedRowItem, ITableProps, ITableState, ITableTypes, IHeaderOptions,
 	IRowTypes
 } from './ITable';
+import { isNull} from 'util';
 import { Header } from './Header';
 import { Rows } from './Rows';
 import { Footer } from './Footer';
 
-import './CEHTable.scss';
-import { isNull, isUndefined } from 'util';
+import './Table.scss';
+
 export class CEHTable extends React.Component<ITableProps, ITableState> {
 	state: ITableState = {
 		normalizedHeaders: [],
@@ -19,15 +20,19 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		currentRowLength:  0,
 		rowsPerPage:  10,
 		rowsPerPageOptions:[ 10, 25, 50, 100 ],
-
 		rowPosition:       0,
 		control:           {
 			sort:     false,
-			paging:   false,
+			setRowsPerPage:   false,
+			setPosition:   false,
 			search:   false,
 			callback: () => {
 				console.log('Control callback function has not been set')
 			}
+		},
+		sort:{
+			direction:undefined,
+			id:undefined
 		}
 	};
 
@@ -129,12 +134,12 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 			}
 		});
 	};
-	normalizeCells = (row, headers: INormalizedHeaderItem[][], rowIdx: number): Array<INormalizedRowItem> => {
+	normalizeCells = (row, headers: INormalizedHeaderItem[][], rowIdx: number): INormalizedRowItem[] => {
 		let parseSearchText = (v): string | number => {
 			let value = Array.isArray(v) ? v[ 1 ] : v;
 			return React.isValidElement(value) ? '' : value;
 		};
-		let a: Array<INormalizedRowItem> = row.map((c, i, a) => {
+		return row.map((c, i, a) => {
 			let iHeaders;
 			try {
 				let fHeaders = headers.find((item, idx) => {
@@ -163,34 +168,37 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 				console.error('It appears there is an issue when parsing/normalizing your row index. Validate that your largest header length is equal to your row length')
 				throw e;
 			}
-
-
-
-
 		});
-		return a;
+
 	};
 
-	sortRows = (direction: any, id: string) => {
-		let {normalizedRows,currentRows}=this.state;
-		let rows = currentRows.length < normalizedRows.length ? currentRows : normalizedRows;
-		let sortRows = rows.sort((a: any, b: any) => {
-			let pprev = a.find((item) => item.id === id),
-				pnext = b.find((item) => item.id === id);
-			let prev = isNaN(Number(pprev)) ? pprev.searchText.toUpperCase() : Number(pprev),
-				next = isNaN(Number(pprev)) ? pnext.searchText.toUpperCase() : Number(pnext);
-			if ( direction === 0 ) {
-				return prev < next ? -1 : prev > next ? 1 : 0;
-			}
-			;
-			if ( direction === 1 ) {
-				return prev < next ? 1 : prev > next ? -1 : 0;
-			}
-			;
-			return 0;
+	sortRows = (direction: 0|1, id: string):void => {
+		if(this.props.control && this.props.control.sort){
+			this.userControl("sort",{sort:{direction,id}});
+			this.setState({sort:{direction,id}});
+		}
+		else {
+			let {normalizedRows, currentRows} = this.state,
+				rows = currentRows.length < normalizedRows.length ? currentRows : normalizedRows,
+				sortRows = rows.sort((a: any, b: any) => {
+				let pprev = a.find((item) => item.id === id),
+					pnext = b.find((item) => item.id === id),
+					prev = isNaN(Number(pprev)) ? pprev.searchText.toUpperCase() : Number(pprev),
+					next = isNaN(Number(pprev)) ? pnext.searchText.toUpperCase() : Number(pnext);
+				if ( direction === 0 ) {
+					return prev < next ? -1 : prev > next ? 1 : 0;
+				}
+				;
+				if ( direction === 1 ) {
+					return prev < next ? 1 : prev > next ? -1 : 0;
+				}
+				;
+				return 0;
 
-		});
-		this.setState({currentRows: sortRows});
+			});
+			this.setState({currentRows: sortRows});
+		}
+
 	};
 	filterRows = (filterObj) => {
 		let filteredRows = this.state.normalizedRows.filter((row) => {
@@ -226,15 +234,14 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 			action:type,
 			query:{},
 			sort:{
-				direction:null,
-				id:null
+				direction:k.hasOwnProperty("sort") ? k.sort.direction : this.state.sort.direction,
+				id:k.hasOwnProperty("sort") ? k.sort.id : this.state.sort.id,
 			},
 			paging:{
 				rowsPerPage:k.hasOwnProperty("rpp") ? k.rpp : this.state.rowsPerPage,
 				position:k.hasOwnProperty("pos") ? k.pos : this.state.rowPosition
 			}
 		}
-
 		this.state.control.callback(actionObj)
 	}
 	render () {
