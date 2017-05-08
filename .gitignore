@@ -1,0 +1,11 @@
+
+.gitignore
+.idea/
+.DS_Store/
+node_modules/
+build/
+/example/
+
+*.log
+**/*.log
+
