@@ -214,11 +214,11 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 
 	};
 	setRowsPerPage = (rpp) => {
-		this.props.control.setRowsPerPage ? this.userControl("setRowsPerPage",{rpp}) :
+		this.props.control && this.props.control.setRowsPerPage ? this.userControl("setRowsPerPage",{rpp}) :
 			this.setState({rowsPerPage:  rpp});
 	};
 	setPosition = (pos) => {
-		this.props.control.setPosition ? this.userControl("setPosition",{pos}) :
+		this.props.control && this.props.control.setPosition ? this.userControl("setPosition",{pos}) :
 			this.setState({rowPosition: pos});
 	};
 	userControl = (type:string,k) => {

@@ -9,10 +9,11 @@ export class Rows extends React.Component<any, any> {
 
 		return this.props.items
 			.filter((row, i) => {
-				if(this.props.control.setPosition){return true}
+				if(this.props.control && this.props.control.setPosition){return true}
+
 				return this.props.footer ?
 					i >= this.props.position &&
-					i < this.props.position + this.props.rowsPerPage.value : true
+					i < this.props.position + this.props.rowsPerPage : true
 			})
 			.map((row: any, i: number) => {
 					return <tr key={`b_row_${i}`}>{this.getCells(row, i)}</tr>;

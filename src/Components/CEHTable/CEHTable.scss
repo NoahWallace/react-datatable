@@ -1,12 +1,17 @@
 
-
 .table-wrapper {
   display: inline-block;
   width: 100%;
 
-  .right{text-align:right;}
-  .left{text-align:left;}
-  .center{text-align:center;}
+  .right {
+    text-align: right;
+  }
+  .left {
+    text-align: left;
+  }
+  .center {
+    text-align: center;
+  }
   .sort {
     .sort-text {
       position: relative;
@@ -20,44 +25,72 @@
       }
     }
   }
-    tfoot{
-      tr{
-        td{
-          >div{
-            float:right;
+  thead{
+    th{
+      &.search{
+        >div{
+          margin:0 0 0 -4px;
+          padding:0;
+          border:1px solid #e4e4e4;
+          background:white;
+          position:relative;
+          line-height: 21px;
+          >span{
+            position:absolute;
+            right:4px;
+            top:1px;
           }
-          .pagerbtn{
-            color: #6a6a6a;
-            font-size: 31px;
-            padding: 0 10px;
-            background: none;
-            display: inline-block;
-            line-height: 36px;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
+          input{
+            background:inherit;
+            border:none;
+            line-height:inherit;
             outline:none;
-            &.disabled{
-              opacity: .4;
-              cursor: not-allowed;
-              box-shadow: none;
-            }
-          }
-          .pages{
-            display: inline-block;
-            line-height:36px;
-            font-size: 18px;
-          }
-          .vdl-dropdown-list{
-            display: inline-block;
-            bottom: -9px;
-
+            margin-right:10px;
+            margin-left:4px;
           }
         }
       }
     }
   }
+  tfoot {
+    tr {
+      td {
+        > div {
+          float: right;
+        }
+        .pagerbtn {
+          color: #6A6A6A;
+          font-size: 31px;
+          padding: 0 10px;
+          background: none;
+          display: inline-block;
+          line-height: 36px;
+          box-sizing: border-box;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          outline: none;
+          &.disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            box-shadow: none;
+          }
+        }
+        .pages {
+          display: inline-block;
+          line-height: 36px;
+          font-size: 18px;
+        }
+        .vdl-dropdown-list {
+          display: inline-block;
+          bottom: -9px;
+
+        }
+      }
+    }
+  }
+}
+
 /*  table {
     display: table;
     min-width: 100%;

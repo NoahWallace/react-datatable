@@ -37,8 +37,8 @@ export const mockHeaders = {
 		   ],
 			 simplewithdoublegroup: [
 				 [
-					 {title:"User",options:{span:2}},
-					 {title:"Address",options:{span:8}}
+					 {title:"User",options:{span:2,headerClass:"center"}},
+					 {title:"Address",options:{span:8,headerClass:"center"}}
 				 ],
 				 [
 					 {title: 'userName', id: 'userName'},
@@ -88,8 +88,8 @@ export const mockHeaders = {
 			 ],
 			 sort_withgroup: [
 				 [
-					 {title:"User",options:{span:2}},
-					 {title:"Address",options:{span:8}}
+					 {title:"User",options:{span:2,headerClass:"center"}},
+					 {title:"Address",options:{span:8,headerClass:"center"}}
 				 ],
 				 [
 					 {title: 'userName', id: 'userName'},
