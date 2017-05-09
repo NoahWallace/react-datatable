@@ -1,17 +1,8 @@
-
-.table-wrapper {
+@import '../../../CSS/variables';
+@import '../../../CSS/colors';
+.ceh-table-wrapper {
   display: inline-block;
   width: 100%;
-
-  .right {
-    text-align: right;
-  }
-  .left {
-    text-align: left;
-  }
-  .center {
-    text-align: center;
-  }
   .sort {
     .sort-text {
       position: relative;
@@ -143,7 +134,7 @@
               box-shadow: none;
             }
           }
-          .pages {
+          .text {
             display: inline-block;
             line-height: 36px;
             font-size: 18px;

@@ -30,15 +30,15 @@ export const mockHeaders = {
 				   {title: 'street1', id: 'street1'},
 				   {title: 'street2', id: 'street2'},
 				   {title: 'city', id: 'city'},
-				   {title: 'state', id: 'state', options:{headerClass:"center",colClass:"center"}},
-				   {title: 'zip', id: 'zip' , options:{headerClass:"center",colClass:"center"}},
-				   {title: 'country', id: 'country', options:{headerClass:"right",colClass:"right"}},
+				   {title: 'state', id: 'state', options:{headerClass:"align-center",colClass:"align-center"}},
+				   {title: 'zip', id: 'zip' , options:{headerClass:"align-center",colClass:"align-center"}},
+				   {title: 'country', id: 'country', options:{headerClass:"align-right",colClass:"align-right"}},
 			   ]
 		   ],
 			 simplewithdoublegroup: [
 				 [
-					 {title:"User",options:{span:2,headerClass:"center"}},
-					 {title:"Address",options:{span:8,headerClass:"center"}}
+					 {title:"User",options:{span:2,headerClass:"align-center"}},
+					 {title:"Address",options:{span:8,headerClass:"align-center"}}
 				 ],
 				 [
 					 {title: 'userName', id: 'userName'},
@@ -48,14 +48,14 @@ export const mockHeaders = {
 					 {title: 'street1', id: 'street1'},
 					 {title: 'street2', id: 'street2'},
 					 {title: 'city', id: 'city'},
-					 {title: 'state', id: 'state', options:{headerClass:"center",colClass:"center"}},
-					 {title: 'zip', id: 'zip' , options:{headerClass:"center",colClass:"center"}},
-					 {title: 'country', id: 'country', options:{headerClass:"right",colClass:"right"}},
+					 {title: 'state', id: 'state', options:{headerClass:"align-center",colClass:"align-center"}},
+					 {title: 'zip', id: 'zip' , options:{headerClass:"align-center",colClass:"align-center"}},
+					 {title: 'country', id: 'country', options:{headerClass:"align-right",colClass:"align-right"}},
 				 ],
 				 [
 					 {title:<StateLess/>,options:{span:8}},
-					 {title:"alignCenter",options:{headerClass:"center",colClass:"center"}},
-					 {title:"alignRight",options:{headerClass:"right",colClass:"right"}}
+					 {title:"align-center",options:{headerClass:"align-center",colClass:"align-center"}},
+					 {title:"align-right",options:{headerClass:"align-right",colClass:"align-right"}}
 				 ],
 			 ],
 			 search: [
@@ -88,8 +88,8 @@ export const mockHeaders = {
 			 ],
 			 sort_withgroup: [
 				 [
-					 {title:"User",options:{span:2,headerClass:"center"}},
-					 {title:"Address",options:{span:8,headerClass:"center"}}
+					 {title:"User",options:{span:2,headerClass:"align-center"}},
+					 {title:"Address",options:{span:8,headerClass:"align-center"}}
 				 ],
 				 [
 					 {title: 'userName', id: 'userName'},

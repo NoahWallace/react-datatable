@@ -284,7 +284,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 	render () {
 
 		return (
-			<div className="table-wrapper">
+			<div className="ceh-table-wrapper">
 				<table className={this.props.className}>
 					<Header
 						headers={this.state.normalizedHeaders}
