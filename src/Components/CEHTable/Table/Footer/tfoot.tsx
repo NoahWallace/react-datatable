@@ -43,14 +43,15 @@ export class Footer extends React.Component<any, any> {
 		return {
 			position: position + 1,
 			currentRowLength,
-			current
+			current,
+			currentPage:Math.floor(position / rowsPerPage),
+			totalPages:Math.ceil(currentRowLength/rowsPerPage)
 		};
 
 	};
 
 	render () {
 		let pager = this.setPager();
-		let page = `${pager.position} - ${pager.current} of ${pager.currentRowLength}`;
 		let st: any = {};
 
 		st.first = pager.position - this.props.rowsPerPage < 0;
@@ -64,6 +65,7 @@ export class Footer extends React.Component<any, any> {
 			<tr>
 				<td colSpan={this.props.colLength}>
 					<div>
+						<span className="pages">Rows Per Page</span>
 						<DropdownList
 							value={this.props.rowsPerPage}
 							data={this.props.rowsPerPageOptions}
@@ -73,9 +75,12 @@ export class Footer extends React.Component<any, any> {
 						<button className={st.first ? 'pagerbtn disabled' : 'pagerbtn'}
 								onClick={this.goToStart}><i><ADPPaginationFirst /></i>
 						</button>
-						<button className={st.back ? 'pagerbtn disabled' : 'pagerbtn'} onClick={this.goBack}>
-							<i><ADPPaginationPrev /></i></button>
-						<div className="pages">{page}</div>
+						<button className={st.back ? 'pagerbtn disabled' : 'pagerbtn'}
+								onClick={this.goBack}
+						>
+							<i><ADPPaginationPrev /></i>
+						</button>
+						<div className="pages">{`${pager.currentPage+1} of ${pager.totalPages}`}</div>
 						<button className={st.next ? 'pagerbtn disabled' : 'pagerbtn'} disabled={st.next}
 								onClick={this.goForward}><i><ADPPaginationNext /></i></button>
 						<button className={st.last ? 'pagerbtn disabled' : 'pagerbtn'} disabled={st.last}

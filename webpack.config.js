@@ -35,6 +35,12 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
+				use: [
+					{loader:'url-loader',
+						options:{limit:10000}}]
 			}
 		]
 	},

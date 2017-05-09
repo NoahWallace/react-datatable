@@ -17,11 +17,8 @@ export interface ITableProps {
 	footer?:boolean;
 	rows: IRowTypes[];
 	headers: IHeaderOptions[][];
-	sort?: (direction: 0 | 1, id: string) => void;
-	paging?: (rowsPerPage: number) => void;
-	filter?: (filterObj: any) => void;
-	pageSelect?: Array<number>;
 	control?:IHTTPControl;
+	waiting?:boolean;
 
 
 }
@@ -37,6 +34,7 @@ export interface ITableState {
 	rowsPerPage?:number;
 	rowPosition: number;
 	control?:IHTTPControl
+	waiting:boolean;
 }
 
 export interface INormalizedHeaderItem {
