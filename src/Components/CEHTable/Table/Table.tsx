@@ -33,13 +33,15 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		sort:               {
 			direction: undefined,
 			id:        undefined
-		}
+		},
+		waiting:false
 	};
 
 	componentDidMount () {
-
-		let normalizedHeaders: Array<Array<INormalizedHeaderItem>> = this.normalizeHeaderRows();
-		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(normalizedHeaders, this.props.rows);
+		let rows;
+		let normalizedHeaders: INormalizedHeaderItem[][] = this.normalizeHeaderRows();
+		rows=this.props.waiting ? this.getWaitingRows(normalizedHeaders) : this.props.rows;
+		let normalizedRows: INormalizedRowItem[][] = this.normalizeRows(normalizedHeaders, rows);
 		let colLength = normalizedHeaders.reduce(function (a, i, ii) {
 			return ii === 1 ? a : i.length > a.length ? i : a;
 		});
@@ -54,30 +56,54 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 			rowsPerPageOptions: this.props.rowsPerPageOptions || this.state.rowsPerPageOptions,
 			rowPosition:        this.props.rowPosition || 0,
 			colLength:          colLength.length,
-			control:            {...this.state.control, ...this.props.control}
+			control:            {...this.state.control, ...this.props.control},
+			waiting: this.props.waiting || false
 		});
 
 	}
 
-	componentWillReceiveProps (nextProps) {
-
-		let normalizedRows: Array<Array<INormalizedRowItem>> = this.normalizeRows(this.state.normalizedHeaders, nextProps.rows);
-		this.setState({
-			normalizedRows,
-			currentRows:      normalizedRows,
-			currentRowLength: nextProps.totalRecordCount || normalizedRows.length,
-			rowLength:        nextProps.totalRecordCount || normalizedRows.length,
-			rowsPerPage:      nextProps.rowsPerPage || this.state.rowsPerPage,
-			rowPosition:      nextProps.rowPosition || 0,
-		});
+	componentWillReceiveProps (nextProps) {console.log(nextProps.waiting)
+		let rows =nextProps.waiting ? this.getWaitingRows(this.state.normalizedHeaders) : nextProps.rows;
+		let normalizedRows: INormalizedRowItem[][] = this.normalizeRows(this.state.normalizedHeaders, rows);
+			this.setState({
+				normalizedRows,
+				currentRows:      normalizedRows,
+				currentRowLength: nextProps.totalRecordCount || normalizedRows.length,
+				rowLength:        nextProps.totalRecordCount || normalizedRows.length,
+				rowsPerPage:      nextProps.rowsPerPage || this.state.rowsPerPage,
+				rowPosition:      nextProps.rowPosition || 0,
+			});
 
 	}
+	getWaitingRows=(normalizedHeaders)=>{
+		let max = -Infinity;
+		let index = -1;
 
+		normalizedHeaders.forEach((a, i)=>{
+			if (a.length>max) {
+				max = a.length;
+				index = i;
+			}
+		});
+		let rpp=this.props.rowsPerPage || this.state.rowsPerPage;
+		let rows=new Array(rpp)
+		for(let r=0;r<rpp;r++){
+			let row=new Array(max);
+			for(let c=0;c<max;c++){
+				row[c]=(<div className="wait-cell"> </div>)
+			}
+			rows[r]=(row);
+		}
+
+		return rows
+	}
 	normalizeHeaderRows = (): INormalizedHeaderItem[][] => {
 		let searchRow: any = [];
+
 		let rows = this.props.headers.map((row, i) => {
 			let cell = this.normalizeHeaderCells(row, i);
 			if ( cell.length > searchRow.length ) {
+
 				searchRow = new Array(cell.length);
 				cell.map((item) => {
 					if ( item.searchable ) {

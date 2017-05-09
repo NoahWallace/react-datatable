@@ -11,8 +11,10 @@ import {
 	SortWithSearchTable,
 	HttpSimpleTable,
 	HttpPagingTable,
-	HttpSimpleTableWithContainer
+	HttpSimpleTableWithContainer,
+	WaitingTable
 } from './TableViews';
+
 
 
 export const Layout = () => {
@@ -37,6 +39,7 @@ export const Layout = () => {
 								<li><Link to="/sort">sort</Link></li>
 								<li><Link to="/sortwithgroup">sortwithgroup</Link></li>
 								<li><Link to="/sortwithsearch">sortwithsearch</Link></li>
+								<li><Link to="/waiting">waiting</Link></li>
 							</ul>
 						</li>
 						<li><h3>Http Tables</h3>
@@ -59,7 +62,7 @@ export const Layout = () => {
 						<Route path="/sortwithgroup" component={SortWithGroupTable}/>
 						<Route path="/sortwithsearch" component={SortWithSearchTable}/>
 						<Route path="/httpsimple" component={HttpSimpleTable}/>
-						<Route path="/httppaging" component={HttpPagingTable}/>
+						<Route path="/waiting" component={WaitingTable}/>
 					</div>
 				</main>
 

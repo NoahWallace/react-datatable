@@ -18,6 +18,7 @@ export interface ITableProps {
 	rows: IRowTypes[];
 	headers: IHeaderOptions[][];
 	control?:IHTTPControl;
+	waiting?:boolean;
 
 
 }
@@ -33,6 +34,7 @@ export interface ITableState {
 	rowsPerPage?:number;
 	rowPosition: number;
 	control?:IHTTPControl
+	waiting:boolean;
 }
 
 export interface INormalizedHeaderItem {

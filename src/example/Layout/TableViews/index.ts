@@ -8,3 +8,4 @@ export * from './sort_table';
 export * from './sortwithgroup_table';
 export * from './sortwithsearch_table';
 export * from './simplehttpwithcontainer';
+export * from './waiting_table';
