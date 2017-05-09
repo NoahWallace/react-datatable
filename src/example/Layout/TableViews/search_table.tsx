@@ -12,7 +12,7 @@ export const SearchTable = () => {
 	return (
 		<div>
 			<CEHTable
-				className="vdl-table"
+				className=""
 				headers={mockHeaders.search}
 				rows={mockData}
 			/>

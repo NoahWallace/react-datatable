@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CaretDown from 'adp-react-icons/lib/fa/caret-down';
 import CaretUp from 'adp-react-icons/lib/fa/caret-up';
-import { ITableTypes } from '../../Table/ITable';
+import { ITableTypes } from '../../ITable';
 
 export interface ISortableHeaderCellProps{
 	cellIdx:number;
@@ -18,7 +18,7 @@ export const SortableHeaderCell:React.StatelessComponent<ISortableHeaderCellProp
 
 
 		let {cellIdx, rowIdx, setSort, id, title, sort, headerClass} = props;
-		let angles = <span><i><CaretDown/><CaretUp/></i></span>;
+	let angles = <span><i><CaretUp/></i><i><CaretDown/></i></span>;
 		let ad = <span><i><CaretDown/></i></span>;
 		let au = <span><i><CaretUp/></i></span>;
 		return (

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, Route, BrowserRouter } from 'react-router-dom';
-import { CEHTable } from '../../Components/CEHTable';
+import { Container } from '../../Components/CEHTable';
 import {
 	SimpleTable,
 	SimpleGroupedTable,
@@ -10,7 +10,8 @@ import {
 	SortWithGroupTable,
 	SortWithSearchTable,
 	HttpSimpleTable,
-	HttpPagingTable
+	HttpPagingTable,
+	HttpSimpleTableWithContainer
 } from './TableViews';
 
 
@@ -22,6 +23,11 @@ export const Layout = () => {
 				<nav>
 					<ul>
 						<li><Link to="/home">Home</Link></li>
+						<li><h3>Container</h3>
+							<ul>
+								<li><Link to="/container">Container</Link></li>
+							</ul>
+						</li>
 						<li><h3>CEH Tables</h3>
 							<ul>
 								<li><Link to="/simple">Simple</Link></li>
@@ -44,6 +50,7 @@ export const Layout = () => {
 				</nav>
 				<main>
 					<div className="content">
+						<Route path="/container" component={HttpSimpleTableWithContainer}/>
 						<Route path="/simple" component={SimpleTable}/>
 						<Route path="/simplewithgroup" component={SimpleGroupedTable}/>
 						<Route path="/simplewithgroups" component={SimpleGroupedMultiTable}/>

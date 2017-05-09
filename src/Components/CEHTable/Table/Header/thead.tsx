@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { INormalizedHeaderItem } from '../Table/ITable';
+import { INormalizedHeaderItem } from '../ITable';
 import { SearchHeaderCell, StandardHeaderCell, SortableHeaderCell } from './Cells';
 
 export interface IHeaderState {

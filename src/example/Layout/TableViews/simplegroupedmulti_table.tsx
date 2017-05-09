@@ -12,7 +12,7 @@ export const SimpleGroupedMultiTable = () => {
 	return (
 		<div>
 			<CEHTable
-				className="vdl-table"
+				className=""
 				headers={mockHeaders.simplewithdoublegroup}
 				rows={mockData}
 			/>

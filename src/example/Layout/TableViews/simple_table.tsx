@@ -12,7 +12,7 @@ export const SimpleTable = () => {
 	return (
 		<div>
 			<CEHTable
-				className="vdl-table"
+				className=""
 				headers={mockHeaders.simple}
 				rows={mockData}
 				limit={23}

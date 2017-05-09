@@ -7,3 +7,4 @@ export * from './simplegroupedmulti_table';
 export * from './sort_table';
 export * from './sortwithgroup_table';
 export * from './sortwithsearch_table';
+export * from './simplehttpwithcontainer';

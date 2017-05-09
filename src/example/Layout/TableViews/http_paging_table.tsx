@@ -4,9 +4,6 @@ import { CEHTable } from '../../../Components/CEHTable';
 import {mockdata1} from '../mockData/mockdata1';
 import {mockHeaders} from '../mockData/headers'
 
-
-
-
 export class HttpPagingTable extends React.Component<any,any> {
 	state={
 		tableRows:[],
@@ -21,8 +18,6 @@ export class HttpPagingTable extends React.Component<any,any> {
 			rowsPerPage:10,
 			position:0
 		}
-
-
 	}
 	componentWillMount(){
 
@@ -54,11 +49,13 @@ export class HttpPagingTable extends React.Component<any,any> {
 				console.log(o.sort)
 				break;
 			case 'search':
+				console.log(o.query)
 				break;
 			case 'setRowsPerPage':
 				this.setState({paging:{...this.state.paging,...{rowsPerPage:o.paging.rowsPerPage}}})
 				break;
 			case 'setPosition':
+				console.log(o)
 				this.setState({paging:{...this.state.paging,...{position:o.paging.position}}})
 				break;
 		}
@@ -74,17 +71,19 @@ export class HttpPagingTable extends React.Component<any,any> {
 
 		<div>
 			<CEHTable
-				className="vdl-table"
-				headers={mockHeaders.sort}
+				className=""
+				headers={mockHeaders.sort_withsearch}
 				rows={this.state.tableRows}
 				footer
 				rowsPerPage={this.state.paging.rowsPerPage}
+				rowsPerPageOptions={[10,15,20]}
 				rowPosition={this.state.paging.position}
 				totalRecordCount={this.state.totalRecordCount}
 				control={{
 					setRowsPerPage:true,
 					setPosition:true,
 					sort:true,
+					search:true,
 					callback:this.updateData
 				}}
 			/>

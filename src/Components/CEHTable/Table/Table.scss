@@ -22,92 +22,121 @@
         position: absolute;
         right: 0;
         top: 0;
-      }
-    }
-  }
-  thead{
-    th{
-      &.search{
-        >div{
-          margin:0 0 0 -4px;
-          padding:0;
-          border:1px solid #e4e4e4;
-          background:white;
-          position:relative;
-          line-height: 21px;
-          >span{
-            position:absolute;
-            right:4px;
-            top:1px;
-          }
-          input{
-            background:inherit;
-            border:none;
-            line-height:inherit;
-            outline:none;
-            margin-right:10px;
-            margin-left:4px;
-          }
-        }
-      }
-    }
-  }
-  tfoot {
-    tr {
-      td {
-        > div {
-          float: right;
-        }
-        .pagerbtn {
-          color: #6A6A6A;
-          font-size: 31px;
-          padding: 0 10px;
-          background: none;
-          display: inline-block;
-          line-height: 36px;
-          box-sizing: border-box;
-          border: none;
-          border-radius: 25px;
-          cursor: pointer;
-          outline: none;
-          &.disabled {
-            opacity: .4;
-            cursor: not-allowed;
-            box-shadow: none;
-          }
-        }
-        .pages {
-          display: inline-block;
-          line-height: 36px;
-          font-size: 18px;
-        }
-        .vdl-dropdown-list {
-          display: inline-block;
-          bottom: -9px;
+        display: inline-flex;
 
+        flex-direction: column;
+        i{
+         height:8px;
+          &:only-child{
+            margin-top:5px;
+          }
+        }
+
+      }
+    }
+  }
+  table {
+    width:100%;
+    max-width:100%;
+    font-size:14px;
+    th,td{
+      vertical-align: middle;
+      border:none;
+    }
+
+    thead {
+      border-top:1px solid black;
+      border-bottom:1px solid black;
+      tr {
+        th {
+          color: #6a6a6a;
+          font-weight: 600;
+          text-align: left;
+          text-transform: uppercase;
+          cursor: pointer;
+          > div{
+            margin:6px;
+            padding:6px 10px;
+          }
+          &.group {
+            > div {
+              background-color: white
+            }
+          }
+          &.search {
+            > div {
+              border: 1px solid #E4E4E4;
+              background: white;
+              position: relative;
+              line-height: 21px;
+              > span {
+                position: absolute;
+                right: 4px;
+                top: 50%;
+                margin-top:-10.5px;
+              }
+              input {
+                background: inherit;
+                border: none;
+                line-height: inherit;
+                outline: none;
+                margin-right: 10px;
+                margin-left: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+    tbody {
+      > tr{
+        border-bottom:1px solid #6a6a6a;
+        &:hover{
+          cursor:pointer;
+          border-bottom:1px solid #1a8099; //brighter color?
+        }
+        > td{
+          padding:6px 16px;
+          font-weight:400;
+        }
+      }
+    }
+    tfoot {
+      tr {
+        td {
+          > div {
+            float: right;
+          }
+          .pagerbtn {
+            color: #6A6A6A;
+            font-size: 24px;
+            padding: 0 10px;
+            background: none;
+            display: inline-block;
+            line-height: 36px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            outline: none;
+            &.disabled {
+              opacity: .4;
+              cursor: not-allowed;
+              box-shadow: none;
+            }
+          }
+          .pages {
+            display: inline-block;
+            line-height: 36px;
+            font-size: 18px;
+          }
+          .vdl-dropdown-list {
+            display: inline-block;
+            bottom: -9px;
+          }
         }
       }
     }
   }
 }
-
-/*  table {
-    display: table;
-    min-width: 100%;
-    thead{
-      border-top: 1px solid #4a4a4a;
-      border-bottom: 1px solid #4a4a4a;
-    }
-    tr {
-      th {
-        padding: 8px;
-        min-width: 75px;
-        text-transform:uppercase;
-      }
-      td {
-        min-width: 75px;
-        padding: 8px;
-      }
-    }
-  }*/
 

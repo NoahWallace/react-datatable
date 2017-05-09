@@ -12,7 +12,7 @@ export const SortTable = () => {
 	return (
 		<div>
 			<CEHTable
-				className="vdl-table"
+				className=""
 				headers={mockHeaders.sort}
 				rows={mockData}
 				footer

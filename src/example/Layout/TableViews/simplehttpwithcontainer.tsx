@@ -1,13 +1,14 @@
 import * as React from 'react';
 
-import { CEHTable } from '../../../Components/CEHTable';
+import { CEHTable,Container } from '../../../Components/CEHTable';
+
 import {mockdata1} from '../mockData/mockdata1';
 import {mockHeaders} from '../mockData/headers'
 
 
 
 
-export class HttpSimpleTable extends React.Component<any,any> {
+export class HttpSimpleTableWithContainer extends React.Component<any,any> {
 
 	componentWillMount(){
 
@@ -26,15 +27,17 @@ export class HttpSimpleTable extends React.Component<any,any> {
 		})
 	}
 	render() {
-	return (
-		<div>
-			<CEHTable
-				className=""
-				headers={mockHeaders.simple}
-				rows={this.state.tableRows}
-				limit={23}
-			/>
-		</div>
-	);
+		return (
+			<div>
+				<Container>
+				<CEHTable
+					className=""
+					headers={mockHeaders.simple}
+					rows={this.state.tableRows}
+					limit={23}
+				/>
+				</Container>
+			</div>
+		);
 	}
 };
