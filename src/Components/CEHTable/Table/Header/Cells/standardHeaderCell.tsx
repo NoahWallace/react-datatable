@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ITableTypes} from '../../ITable'
+import {ITableTypes} from '../../Table/ITable'
 
 export interface IStandardHeaderCellProps{
 	title:ITableTypes

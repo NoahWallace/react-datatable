@@ -1,7 +1,7 @@
 import * as React from 'react';
-import AngleDown from 'adp-react-icons/lib/fa/angle-down';
-import AngleUp from 'adp-react-icons/lib/fa/angle-up';
-import { ITableTypes } from '../../ITable';
+import CaretDown from 'adp-react-icons/lib/fa/caret-down';
+import CaretUp from 'adp-react-icons/lib/fa/caret-up';
+import { ITableTypes } from '../../Table/ITable';
 
 export interface ISortableHeaderCellProps{
 	cellIdx:number;
@@ -18,14 +18,14 @@ export const SortableHeaderCell:React.StatelessComponent<ISortableHeaderCellProp
 
 
 		let {cellIdx, rowIdx, setSort, id, title, sort, headerClass} = props;
-		let angles = <span><i><AngleDown/><AngleUp/></i></span>;
-		let ad = <span><i><AngleDown/></i></span>;
-		let au = <span><i><AngleUp/></i></span>;
+		let angles = <span><i><CaretDown/><CaretUp/></i></span>;
+		let ad = <span><i><CaretDown/></i></span>;
+		let au = <span><i><CaretUp/></i></span>;
 		return (
 			<th className={'sort ' + headerClass}>
 				<div className="sort-text" onClick={(e) => setSort(cellIdx, rowIdx, id)}>
 					<div >{title}</div>
-					{sort === -1 ? angles : sort === 0 ? au : ad}
+					{sort === -1 ? angles : sort === 1 ? au : ad}
 
 				</div>
 			</th>
