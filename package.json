@@ -4,7 +4,12 @@
   "description": "",
   "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf ./dist && rm -rf ./example && rm -rf ./lib",
+    "server": "npm run prebuild && webpack && webpack-dev-server",
+    "package:tsc":"tsc -p ./tsconfig.package.json --declaration true",
+    "package:webpack":"webpack --config ./webpack.package.js",
+    "build":"npm run package:webpack && npm run package:tsc"
   },
   "author": "Noah Wallace",
   "license": "ISC",
@@ -26,6 +31,7 @@
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "rimraf": "^2.6.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
     "ts-loader": "^2.0.3",

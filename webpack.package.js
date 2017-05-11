@@ -4,10 +4,10 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	devtool:   "source-map",
-	entry:     './src/example/index.tsx',
+	entry:     './src/Components/index.ts',
 	output:    {
-		path:     path.resolve(__dirname, "example"),
-		filename: 'ceh-react-components.bundle.js',
+		path:     path.resolve(__dirname),
+		filename: 'dist/ceh-react-components.bundle.js',
 		publicPath:'/'
 	},
 	resolve:   {
@@ -17,7 +17,11 @@ module.exports = {
 		rules: [
 			{
 				test: /\.tsx?$/,
-				use:  "ts-loader"
+				use:  [{
+					loader:"ts-loader",
+					options:{
+						"configFileName":"tsconfig.package.json"
+					}}]
 			},
 			{
 				test: /\.s?css$/,
@@ -36,24 +40,7 @@ module.exports = {
 						}
 					}
 				]
-			},
-			{
-				test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
-				use: [
-					{loader:'url-loader',
-						options:{limit:10000,outputPath:'css/fonts/'}
-					}
-				]
 			}
 		]
-	},
-	plugins:   [
-		new HtmlWebpackPlugin({template: './src/example/index.html'})
-	],
-	devServer: {
-		port:               8000,
-		historyApiFallback: {
-			index: './example/index.html'
-		}
 	}
 }

@@ -35,7 +35,7 @@ export class Rows extends React.Component<any, any> {
 		let rows=this.getRows();
 
 		return (
-			<tbody className="table__body">
+			<tbody>
 				{rows}
 			</tbody>
 		);

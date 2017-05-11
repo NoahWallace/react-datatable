@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Link, Route, BrowserRouter } from 'react-router-dom';
+import { Link, Route, BrowserRouter, Switch } from 'react-router-dom';
 import { Container } from '../../Components/CEHTable';
 import {Tables} from './Tables'
 
 import '../../CSS/main.scss';
+import { Redirect } from 'react-router';
 
 
 
 export const Layout = () => {
+
 	return (
 		<BrowserRouter>
 			<div>
@@ -20,7 +22,10 @@ export const Layout = () => {
 				</nav>
 				<main>
 					<div className="content">
-					<Route path="/tables" component={Tables}/>
+						<Switch>
+							<Route exact path="/" component={()=><div> </div>}/>
+							<Route path="/tables" component={Tables}/>
+						</Switch>
 					</div>
 				</main>
 			</div>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CaretDown from 'adp-react-icons/lib/fa/caret-down';
 import CaretUp from 'adp-react-icons/lib/fa/caret-up';
-import { ITableTypes } from '../../ITable';
+import { ITableTypes } from '../../ITable.d';
 
 export interface ISortableHeaderCellProps{
 	cellIdx:number;
