@@ -1,18 +1,10 @@
-
-.table-wrapper {
+@import '../../../CSS/variables';
+@import '../../../CSS/colors';
+.ceh-table-wrapper {
   display: inline-block;
   width: 100%;
-
-  .right {
-    text-align: right;
-  }
-  .left {
-    text-align: left;
-  }
-  .center {
-    text-align: center;
-  }
   .sort {
+    cursor: pointer;
     .sort-text {
       position: relative;
       > div {
@@ -38,7 +30,6 @@
   table {
     width:100%;
     max-width:100%;
-    font-size:14px;
     th,td{
       vertical-align: middle;
       border:none;
@@ -50,10 +41,10 @@
       tr {
         th {
           color: #6a6a6a;
-          font-weight: 600;
+          font-family:ProximaNovaSBold;
+          //font-weight: 600;
           text-align: left;
           text-transform: uppercase;
-          cursor: pointer;
           > div{
             margin:6px;
             padding:6px 10px;
@@ -89,6 +80,7 @@
       }
     }
     tbody {
+      background: $white;
       > tr{
         border-bottom:1px solid #6a6a6a;
         &:hover{
@@ -97,7 +89,6 @@
         }
         > td{
           padding:8px 16px;
-          font-weight:400;
           .wait-cell{
             height:21px;
             width:100%;
@@ -111,7 +102,6 @@
             background-image: -webkit-linear-gradient(left, #ebebeb 0%, #e4e4e4 20%, #ebebeb 40%, #ebebeb 100%);
             background-repeat: no-repeat;
             background-size: 800px 104px;
-
             position: relative;
 
 
@@ -143,7 +133,7 @@
               box-shadow: none;
             }
           }
-          .pages {
+          .text {
             display: inline-block;
             line-height: 36px;
             font-size: 18px;

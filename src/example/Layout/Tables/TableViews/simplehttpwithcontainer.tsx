@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { CEHTable,Container } from '../../../Components/CEHTable';
+import { CEHTable,Container } from '../../../../Components/CEHTable';
 
-import {mockdata1} from '../mockData/mockdata1';
-import {mockHeaders} from '../mockData/headers'
+import {mockdata1} from '../../mockData/mockdata1';
+import {mockHeaders} from '../../mockData/headers'
 
 
 

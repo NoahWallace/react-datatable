@@ -6,7 +6,7 @@ export type IRowTypes = Array<ITableTypes> | { [key: string]: ITableTypes };
  React Elements Should not be used in sortable or searchable columns
  */
 export interface ITableProps {
-	className: string;
+	className?: string;
 	rowPosition?: number;
 	limit?: number;
 	rowsPerPage?: number;
@@ -61,8 +61,7 @@ export interface INormalizedRowItem {
 
 export interface IHeaderOptions {
 	title: ITableTypes;
-	//id should only be assigned to the column headers not group headers
-	id?: string;
+	id: string;
 	options?: {
 		sortable?: boolean,
 		searchable?: boolean,

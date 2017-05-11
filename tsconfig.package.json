@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "es2015.promise",
+      "es2016",
+      "dom"
+    ],
+    "jsx": "react",
+    "declaration": false,
+    "outDir": "./lib",
+    "removeComments": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "rootDirs": [
+      "./src/Components"
+    ],
+    "types": [
+      "node",
+      "react"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "example",
+    "src/example",
+    "src/Components/CEHAccordion",
+    "src/Components/CEHTable/Container"
+  ]
+}

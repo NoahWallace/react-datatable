@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { CEHTable } from '../../../Components/CEHTable';
-import {mockdata1} from '../mockData/mockdata1';
-import {mockHeaders} from '../mockData/headers'
+import { CEHTable } from '../../../../Components/CEHTable';
+import {mockdata1} from '../../mockData/mockdata1';
+import {mockHeaders} from '../../mockData/headers'
 
 export class HttpPagingTable extends React.Component<any,any> {
 	state={

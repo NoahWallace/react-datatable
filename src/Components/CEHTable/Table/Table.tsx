@@ -151,7 +151,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 		if ( !rows || rows.length === 0 ) {
 			return [];
 		}
-		let workingRows = rows.slice(0, this.props.limit || 100);
+		let workingRows = rows.slice(0, this.props.limit || 1000);
 		return workingRows.map((row: IRowTypes, i: number) => {
 			if ( Array.isArray(row) ) {
 				return this.normalizeCells(row as ITableTypes[], headers, i);
@@ -284,7 +284,7 @@ export class CEHTable extends React.Component<ITableProps, ITableState> {
 	render () {
 
 		return (
-			<div className="table-wrapper">
+			<div className="ceh-table-wrapper">
 				<table className={this.props.className}>
 					<Header
 						headers={this.state.normalizedHeaders}

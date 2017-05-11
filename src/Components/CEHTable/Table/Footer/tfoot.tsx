@@ -80,14 +80,12 @@ export class Footer extends React.Component<any, any> {
 						>
 							<i><ADPPaginationPrev /></i>
 						</button>
-						<div className="pages">{`${pager.currentPage+1} of ${pager.totalPages}`}</div>
+						<div className="text">{`${pager.currentPage+1} of ${pager.totalPages}`}</div>
 						<button className={st.next ? 'pagerbtn disabled' : 'pagerbtn'} disabled={st.next}
 								onClick={this.goForward}><i><ADPPaginationNext /></i></button>
 						<button className={st.last ? 'pagerbtn disabled' : 'pagerbtn'} disabled={st.last}
 								onClick={this.goToEnd}>
 							<i><ADPPaginationLast /></i></button>
-
-
 					</div>
 				</td>
 			</tr>
