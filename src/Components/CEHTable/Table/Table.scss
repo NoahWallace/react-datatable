@@ -43,11 +43,10 @@
           color: #6a6a6a;
           font-family:ProximaNovaSBold;
           //font-weight: 600;
-          text-align: left;
           text-transform: uppercase;
           > div{
             margin:6px;
-            padding:6px 10px;
+            padding:6px 0;
           }
           &.group {
             > div {
@@ -116,12 +115,11 @@
             float: right;
           }
           .pagerbtn {
-            color: #6A6A6A;
+            color: #6a6a6a;
             font-size: 24px;
             padding: 0 10px;
             background: none;
-            display: inline-block;
-            line-height: 36px;
+            display: inline;
             box-sizing: border-box;
             border: none;
             border-radius: 25px;
